@@ -1,0 +1,110 @@
+:root {
+    --darkBlue: #13212C;
+    --lightBlue: #45637A;
+    --white: #f1f1f1;
+    --darkerBlue: #0b1218;
+}
+
+/* Give full background color */
+html {
+    background-color: var(--darkBlue);
+    background-image: linear-gradient(var(--darkBlue), var(--darkerBlue));
+}
+
+.content {
+    padding-top: 75px;
+    margin: auto;
+    font-family: Helvetica, sans-serif;
+    font-weight: 100;
+}
+
+.title {
+    text-align: center;
+    color: var(--white);
+    font-size: 75px;
+    font-weight: 100;
+}
+
+.options {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    padding: 10px;
+}
+
+.select {
+    display: inline-block;
+    height: 20px;
+    border: 1px solid white;
+    border-radius: 18px;
+    font-size: 16px;
+    padding: 7px 16px;
+    background: var(--darkBlue);
+    color: var(--white);
+    margin: 10px;
+}
+
+.select:hover {
+    background: var(--lightBlue);
+    transition-duration: 0.5s;
+}
+
+.select.checked {
+    background: var(--white);
+    color: var(--darkBlue);
+}
+
+.select input {
+    display: none;
+}
+
+.button {
+    border: 1px solid white;
+    border-radius: 20px;
+    font-size: 20px;
+    padding: 8px 25px;
+    text-align: center;
+    color: var(--white);
+    background: var(--darkBlue);;
+    margin: 10px;
+    transition-duration: 0.6s;
+    cursor: pointer;
+}
+
+.button {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.button:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 7px;
+    right: -35px;
+    transition: 0.5s
+}
+
+.button:hover {
+    background: var(--lightBlue);
+    color: var(--white);
+    padding-right: 35px;
+    padding-left: 15px;
+}
+
+.button:hover:after {
+    opacity: 1;
+    right: 13px;
+}
+
+.button:active {
+    background: var(--white);
+}
+
+img {
+    border-radius: 30px;
+    padding: 20px;
+    width: 50%;
+}

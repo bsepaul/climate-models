@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>
+        Climate Models
+    </title>
+</head> 
+
+<body>
+    <div class="content">
+        <div class="title">CLIMATE MODELS</div>
+        <div class="options">
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="sfcTemp" id="sfcTemp" /> Surface Temperature </label>
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="pcpRate" id="pcpRate" /> Precipitation Rate </label>
+        </div>
+        <div class="options">
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="jan" id="jan"/> Jan </label>
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="feb" id="feb"/> Feb </label>
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="mar" id="mar"/> Mar </label>
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="apr" id="apr"/> Apr </label>
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="may" id="may"/> May </label>
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="jun" id="jun"/> Jun </label>
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="jul" id="jul"/> Jul </label>
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="aug" id="aug"/> Aug </label>
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="sep" id="sep"/> Sep </label>
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="oct" id="oct"/> Oct </label>
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="nov" id="nov"/> Nov </label>
+            <label class="select"><input onchange="change_state(this)" type="checkbox" value="use" name="dec" id="dec"/> Dec </label>
+        </div>
+        <div class="options">
+            <button type="button" class="button" id="createModel" onclick="make_graph()" >Create Model</button>
+        </div>
+        <div class="options">
+            <img src="{{url_for('static', filename='plot.png')}}" alt="Climate Model Plot">
+        </div>
+    </div>
+</body>
+</html>
