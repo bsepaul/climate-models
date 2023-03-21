@@ -13,6 +13,7 @@ html {
 
 .content {
     padding-top: 75px;
+    padding-bottom: 75px;
     margin: auto;
     font-family: Helvetica, sans-serif;
     font-weight: 100;

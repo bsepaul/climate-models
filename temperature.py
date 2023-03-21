@@ -62,73 +62,15 @@ class TemperaturePlot:
 
 
     def make_graph(self):
-
-        # max = min = self.data.values[0][0][0]
-        # print(self.data.values[0][0][0])
-        # for chunk in self.data.values:
-        #     for temps in chunk:
-        #         for temp in temps:
-        #             if temp > max: max = temp
-        #             elif temp < min: min = temp
-        # print("Max is: ", max)
-        # print("Min is: ", min)
-        # max = math.ceil(max)
-        # min = math.floor(min)
-        # print("Rounded max is: ", max)
-        # print("Rounded min is: ", min)
-
-        # fig = plt.figure()
-        # fig = plt.figure(figsize=(10,8))
-        # ax = plt.axes(projection=ccrs.PlateCarree())
-        plt.rcParams["figure.figsize"] = [10, 6]
-        plt.rcParams["figure.autolayout"] = True
-        fig = plt.figure("Temperature Figure")
+        fig = plt.figure(figsize=(10,6))
         ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=self.central_longitude))
-
-        for axis in fig.axes:
-            print('\n\nLINE 87')
-            xaxis1 = getattr(axis, 'xaxis')
-            yaxis1 = getattr(axis, 'yaxis')
-            xaxis2 = axis.get_xaxis()
-            yaxis2 = axis.get_yaxis()
-            
-            print("xaxis1: ", xaxis1)
-            print("yaxis1: ", yaxis1)
-            print("xaxis3: ", xaxis2)
-            print("yaxis2: ", yaxis2)
-
-            xscale = xaxis2.get_scale()
-            yscale = yaxis2.get_scale()
-            print("xscale: ", xscale)
-            print("yscale: ", yscale)
 
         # add coastlines
         ax.coastlines(linewidths=0.5)
 
         ax.set_extent([-180, 180, -90, 90], ccrs.PlateCarree())
 
-        for axis in fig.axes:
-            print('\n\nLINE 110')
-            xaxis1 = getattr(axis, 'xaxis')
-            yaxis1 = getattr(axis, 'yaxis')
-            xaxis2 = axis.get_xaxis()
-            yaxis2 = axis.get_yaxis()
-            
-            print("xaxis1: ", xaxis1)
-            print("yaxis1: ", yaxis1)
-            print("xaxis3: ", xaxis2)
-            print("yaxis2: ", yaxis2)
-
-            xscale = xaxis2.get_scale()
-            yscale = yaxis2.get_scale()
-            # print("Scale1: ", scale1)
-            print("xscale: ", xscale)
-            print("yscale: ", yscale)
-
-        # ax.set_xscale('log')
-        # ax.set_yscale('log')
-
-            # Use geocat.viz.util convenience function to set axes limits & tick values
+        # Use geocat.viz.util convenience function to set axes limits & tick values
         gv.set_axes_limits_and_ticks(ax,
                                     xlim=(-180, 180),
                                     ylim=(-90, 90),
@@ -141,23 +83,6 @@ class TemperaturePlot:
         # Use geocat.viz.util convenience function to make latitude, longitude tick labels
         gv.add_lat_lon_ticklabels(ax)
 
-        for axis in fig.axes:
-            print('\n\nLINE 144')
-            xaxis1 = getattr(axis, 'xaxis')
-            yaxis1 = getattr(axis, 'yaxis')
-            xaxis2 = axis.get_xaxis()
-            yaxis2 = axis.get_yaxis()
-            
-            print("xaxis1: ", xaxis1)
-            print("yaxis1: ", yaxis1)
-            print("xaxis3: ", xaxis2)
-            print("yaxis2: ", yaxis2)
-
-            xscale = xaxis2.get_scale()
-            yscale = yaxis2.get_scale()
-            # print("Scale1: ", scale1)
-            print("xscale: ", xscale)
-            print("yscale: ", yscale)
 
         plot = self.data[0, :, :].plot.contourf(ax=ax,
                                                 transform=ccrs.PlateCarree(),
@@ -186,39 +111,6 @@ class TemperaturePlot:
                                     #     "label":self.label,
                                     #     "shrink": 0.90}))
 
-        # plot the first time slice
-        # plt.plot(self.data[0, :, :])
-        # self.data[0, :, :].plot.contourf(ax=ax)
-                                    # transform=ccrs.PlateCarree(),
-                                    # norm = Normalize(192,312),
-                                    # # vmin=192,
-                                    # # vmax = 312,
-                                    # levels=120, # number of different temperature levels
-                                    # # cmap = self.color,
-                                    # cbar_kwargs={
-                                    #     "extendrect":True,
-                                    #     "orientation":"horizontal",
-                                    #     "format":"%.0f",
-                                    #     # "ticks": np.arange(192, 313, 10),
-                                    #     "label":self.label,
-                                    #     "shrink": 0.90})
-        
-        for axis in fig.axes:
-            print('\n\nLINE 177')
-            xaxis1 = getattr(axis, 'xaxis')
-            yaxis1 = getattr(axis, 'yaxis')
-            xaxis2 = axis.get_xaxis()
-            yaxis2 = axis.get_yaxis()
-            
-            print("xaxis1: ", xaxis1)
-            print("yaxis1: ", yaxis1)
-            print("xaxis3: ", xaxis2)
-            print("yaxis2: ", yaxis2)
-
-            xscale = xaxis2.get_scale()
-            yscale = yaxis2.get_scale()
-            print("xscale: ", xscale)
-            print("yscale: ", yscale)
 
         gv.set_titles_and_labels(
             ax=ax,
@@ -226,8 +118,6 @@ class TemperaturePlot:
             xlabel="Longitude",
             ylabel="Latitude")
 
-
-        plt.show()
         fig.savefig('static/plot.png')
 
 
