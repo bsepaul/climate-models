@@ -5,7 +5,7 @@ from io import BytesIO
 # import json
 # from temperature import TemperaturePlot
 # import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
+# from matplotlib.figure import Figure
 # import geocat.viz as gv
 # import cartopy.crs as ccrs
 # import numpy as np
@@ -17,6 +17,7 @@ def hello():
 
     # TESTING!!!!
     # Generate the figure **without using pyplot**.
+    from matplotlib.figure import Figure
     fig = Figure(figsize=(10,8))
     ax = fig.subplots()
     ax.plot([1, 2])
