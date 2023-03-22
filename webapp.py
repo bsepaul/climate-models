@@ -1,13 +1,14 @@
-from flask import Flask, render_template, request
+from flask import Flask
+# from flask import Flask, render_template, request
 import base64
 from io import BytesIO
-import json
-from temperature import TemperaturePlot
-import matplotlib.pyplot as plt
+# import json
+# from temperature import TemperaturePlot
+# import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
-import geocat.viz as gv
-import cartopy.crs as ccrs
-import numpy as np
+# import geocat.viz as gv
+# import cartopy.crs as ccrs
+# import numpy as np
 app = Flask(__name__)
 
 
