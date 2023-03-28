@@ -15,12 +15,15 @@ function make_graph() {
     // Determine TYPE of graph
 
     // Get state of surface temperature button
-    const surfaceTemperature = document.getElementById('sfcTemp').checked;
-    console.log(surfaceTemperature)
+    const surfaceTemperatureChecked = document.getElementById('sfcTemp').checked;
 
     // Get state of precipitation rate button
-    const precipitationRate = document.getElementById('pcpRate').checked;
-    console.log(precipitationRate)
+    const precipitationRateChecked = document.getElementById('pcpRate').checked;
+
+    // Add plot types to a list of plots
+    const plots = [];
+    if (surfaceTemperatureChecked) { plots.push("sfcTemp") };
+    if (precipitationRateChecked)  { plots.push("pcpRate") };
 
     // Determine which MONTHS to include
     const jan = document.getElementById('jan').checked;
@@ -36,6 +39,7 @@ function make_graph() {
     const nov = document.getElementById('nov').checked;
     const dec = document.getElementById('dec').checked;
 
+    // Add month numbers to a list of months
     const months = []
     if (jan) { months.push("01") }
     if (feb) { months.push("02") }
@@ -50,13 +54,13 @@ function make_graph() {
     if (nov) { months.push("11") }
     if (dec) { months.push("12") }
 
-
-    console.log(months)
-
-    const request = { "months": months, "plot": surfaceTemperature ? "sfc" : "pcp" }
+    // Configure data to send in the request (list of months and list of plot types to include)
+    // Example: A plot of the average surface temperature for the months January, February, and March
+    // request = { "months": ["01", "02", "03"], "plot": ["sfcTemp"]}
+    const request = { "months": months, "plot": plots }
     const requestJson = JSON.stringify(request);
-    console.log(request)
-    console.log(requestJson)
+
+    // POST the request to be caught in webapp.py
     $.ajax({
         url: "/",
         type: "POST",

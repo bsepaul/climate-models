@@ -3,6 +3,9 @@ import cartopy.crs as ccrs
 import geocat.viz as gv
 import xarray as xr
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+import base64
+from io import BytesIO
 
 
 class TemperaturePlot:
@@ -51,7 +54,7 @@ class TemperaturePlot:
         # Average the values by dividing the values by the number of months
         self.data.values = (self.data.values) / len(self.months)
 
-    def make_graph(self):
+    def make_fig(self):
         fig = plt.figure(figsize=(10, 6))
         ax = plt.axes(projection=ccrs.PlateCarree(
             central_longitude=self.central_longitude))
@@ -93,12 +96,21 @@ class TemperaturePlot:
             xlabel="Longitude",
             ylabel="Latitude")
 
-        fig.savefig('static/plot2.png')
-
-    def create_plot(self):
-        self.set_data()
-        self.make_graph()
+        return fig
+        # fig.savefig('static/plot2.png')
 
 
-testPlot = TemperaturePlot(["01", "02", "03", "04"])
-testPlot.create_plot()
+# Only test if running this file
+if __name__ == '__main__':
+    testPlot = TemperaturePlot(["01", "02", "03", "04"])
+    testPlot.set_data()
+    fig = testPlot.make_fig()
+    # Save it to a temporary buffer.
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    # Embed the result in the html output.
+    data = base64.b64encode(buf.getbuffer()).decode("ascii")
+    graph = f"<img src='data:image/png;base64,{data}'/>"
+
+    with open('test.html', 'w', encoding='utf-8') as file:
+        file.writelines(graph)
