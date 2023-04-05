@@ -7,9 +7,6 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
-    cmaps-src = {
-      url = "github:hhuangwx/cmaps";
-    };
   };
   outputs = {
     nixpkgs,
@@ -91,16 +88,20 @@
               cmaps = buildPythonPackage rec {
                 pname = "cmaps";
                 version = "0.1.0";
-                src = cmaps-src;
-                meta = with pkgs.stdenv.lib; {
-                  description = "Colormaps for scientific visualization.";
-                  homepage = "https://github.com/hhuangwx/cmaps";
-                  license = licenses.mit;
-                  maintainers = [maintainers.yourname];
+                src = fetchPypi {
+                  inherit pname version;
+                  sha256 = "sha256-FvqYBvrMJPMfRUuJh0HsVjmnK6nU/4oZrQ6UYp2Ty5U=";
                 };
+                # meta = with pkgs.stdenv.lib; {
+                #   description = "Colormaps for scientific visualization.";
+                #   homepage = "https://github.com/hhuangwx/cmaps";
+                #   license = licenses.mit;
+                #   maintainers = [maintainers.yourname];
+                # };
               };
+
               # geocat.viz =  buildPythonPackage rec {
-              # metpy =  buildPythonPackage rec {
+
               metpy = buildPythonPackage rec {
                 pname = "MetPy";
                 version = "1.0.1";
@@ -138,7 +139,7 @@
                 # cartopy
                 # cmaps
                 # geocat.viz
-                metpy
+                # metpy
                 contourpy
                 cycler
                 flask
