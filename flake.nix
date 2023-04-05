@@ -112,7 +112,7 @@
                 click
                 wheel
                 # cartopy
-                cmaps
+                # cmaps
                 # geocat.viz
                 # metpy
                 contourpy
