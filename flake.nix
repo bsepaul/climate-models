@@ -7,9 +7,9 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
-    cmaps-src = {
-      url = "github:hhuangwx/cmaps";
-    };
+    # cmaps-src = {
+    #   url = "github:hhuangwx/cmaps";
+    # };
   };
   outputs = {
     nixpkgs,
@@ -88,17 +88,17 @@
                 ];
               };
 
-              cmaps = buildPythonPackage rec {
-                pname = "cmaps";
-                version = "0.1.0";
-                src = cmaps-src;
-                meta = with pkgs.stdenv.lib; {
-                  description = "Colormaps for scientific visualization.";
-                  homepage = "https://github.com/hhuangwx/cmaps";
-                  license = licenses.mit;
-                  maintainers = [maintainers.yourname];
-                };
-              };
+              # cmaps = buildPythonPackage rec {
+              #   pname = "cmaps";
+              #   version = "0.1.0";
+              #   src = cmaps-src;
+              #   meta = with pkgs.stdenv.lib; {
+              #     description = "Colormaps for scientific visualization.";
+              #     homepage = "https://github.com/hhuangwx/cmaps";
+              #     license = licenses.mit;
+              #     maintainers = [maintainers.yourname];
+              #   };
+              # };
               # geocat.viz =  buildPythonPackage rec {
               # metpy =  buildPythonPackage rec {
             });
@@ -111,7 +111,7 @@
                 charset-normalizer
                 click
                 wheel
-                # cartopy
+                cartopy
                 # cmaps
                 # geocat.viz
                 # metpy

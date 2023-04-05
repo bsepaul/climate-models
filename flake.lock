@@ -31,26 +31,10 @@
         "type": "github"
       }
     },
-    "nixpkgs-spectrum": {
-      "locked": {
-        "lastModified": 1664449604,
-        "narHash": "sha256-LX0jHEu1RswtcK3tEKVreEPIT7jew0zmblB7E5slb00=",
-        "owner": "tiiuae",
-        "repo": "nixpkgs-spectrum",
-        "rev": "7ae08414da9e43ce60d12c8dc42b5630e33806da",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tiiuae",
-        "repo": "nixpkgs-spectrum",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs",
-        "nixpkgs-spectrum": "nixpkgs-spectrum"
+        "nixpkgs": "nixpkgs"
       }
     }
   },
