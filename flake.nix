@@ -7,10 +7,14 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
+    other-packages = {
+      url = "./nix/python.nix";
+    };
   };
   outputs = {
     nixpkgs,
     flake-utils,
+    other-packages,
     ...
   }:
     flake-utils.lib.eachDefaultSystem (
@@ -19,6 +23,8 @@
           inherit system;
         };
         inherit (pkgs) stdenv lib;
+
+        metpy  = other-packages.metpy;
 
         pythonPackages = lib.fix' (self:
           with self;
@@ -85,47 +91,30 @@
                 ];
               };
 
-              cmaps = buildPythonPackage rec {
-                pname = "cmaps";
-                version = "0.1.0";
-                src = fetchPypi {
-                  inherit pname version;
-                  sha256 = "sha256-FvqYBvrMJPMfRUuJh0HsVjmnK6nU/4oZrQ6UYp2Ty5U=";
-                };
-                # meta = with pkgs.stdenv.lib; {
-                #   description = "Colormaps for scientific visualization.";
-                #   homepage = "https://github.com/hhuangwx/cmaps";
-                #   license = licenses.mit;
-                #   maintainers = [maintainers.yourname];
-                # };
-              };
+              # cmaps = buildPythonPackage rec {
+              #   pname = "cmaps";
+              #   version = "0.1.0";
+              #   src = fetchPypi {
+              #     inherit pname version;
+              #     sha256 = "sha256-FvqYBvrMJPMfRUuJh0HsVjmnK6nU/4oZrQ6UYp2Ty5U=";
+              #   };
+              #   # meta = with pkgs.stdenv.lib; {
+              #   #   description = "Colormaps for scientific visualization.";
+              #   #   homepage = "https://github.com/hhuangwx/cmaps";
+              #   #   license = licenses.mit;
+              #   #   maintainers = [maintainers.yourname];
+              #   # };
+              # };
 
-              # geocat.viz =  buildPythonPackage rec {
+              # geocat = buildPythonPackage rec {
+              #   pname = "geocat.viz";
+              #   version = "0.9.1";
+              #   src = fetchPypi {
+              #     inherit pname version;
+              #     sha256 = "1hkyw2avwpj2f1qx2d2v9pf9xxr8r6f3j0bwq3l3gzb6w8ayppj1";
+              #   };
+              # };
 
-              metpy = buildPythonPackage rec {
-                pname = "MetPy";
-                version = "1.0.1";
-                src = fetchPypi {
-                  inherit pname version;
-                  sha256 = "sha256-FvqYBvrMJPMfRUuJh0HsVjmnK6nU/4oZrQ6UYp2Ty5U=";
-                };
-                propagatedBuildInputs = with self; [
-                  matplotlib
-                  numpy
-                  pandas
-                  pint
-                  pooch
-                  pyproj
-                  scipy
-                  traitlets
-                  xarray
-                  importlib-resources
-                  importlib-metadata
-                ];
-                # The setuptools checks try to use the network which isn't allowed
-                # during the Nix build. Disabling them for now.
-                doCheck = false;
-              };
             });
       in rec {
         devShell = pkgs.mkShell {
@@ -136,10 +125,10 @@
                 charset-normalizer
                 click
                 wheel
-                # cartopy
+                cartopy
                 # cmaps
-                # geocat.viz
-                # metpy
+                # geocat
+                metpy
                 contourpy
                 cycler
                 flask
