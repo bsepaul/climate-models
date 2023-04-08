@@ -10,15 +10,49 @@
   outputs = {
     nixpkgs,
     flake-utils,
-    metpy-src,
     ...
-  }:
+  } @ inputs:
     flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = import nixpkgs {
           inherit system;
         };
         inherit (pkgs) stdenv lib;
+
+        metpy = inputs.nixpkgs.lib.overrideDerivation (oldDrv: {
+          pname = "metpy";
+          version = "1.0.1";
+          src = inputs.nixpkgs.fetchFromGitHub {
+            owner = "Unidata";
+            repo = "MetPy";
+            rev = "v1.0.1";
+            sha256 = "sha256-FvqYBvrMJPMfRUuJh0HsVjmnK6nU/4oZrQ6UYp2Ty5U=";
+          };
+          buildInputs = with inputs.nixpkgs; [
+            matplotlib
+            numpy
+            pandas
+            pint
+            pooch
+            pyproj
+            scipy
+            traitlets
+            xarray
+            importlib-resources
+            importlib-metadata
+          ];
+          doCheck = false;
+        });
+
+        # metpy = pkgs.buildPythonPackage rec {
+        geocat = inputs.nixpkgs.buildPythonPackage rec {
+          pname = "geocat.viz";
+          version = "0.9.1";
+          src = inputs.nixpkgs.python3Packages.fetchPypi {
+            inherit pname version;
+            sha256 = "1hkyw2avwpj2f1qx2d2v9pf9xxr8r6f3j0bwq3l3gzb6w8ayppj1";
+          };
+        };
 
         pythonPackages = lib.fix' (self:
           with self;
@@ -84,7 +118,6 @@
                   "test_gridliner_labels_bbox_style"
                 ];
               };
-
             });
       in rec {
         devShell = pkgs.mkShell {
@@ -96,7 +129,7 @@
                 click
                 wheel
                 cartopy
-                # metpy
+                metpy
                 # cmaps
                 # geocat
                 contourpy
