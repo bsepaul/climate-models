@@ -17,7 +17,10 @@
         pkgs = import nixpkgs {
           inherit system;
         };
-        inherit (pkgs) stdenv lib;
+
+        lib = import flake-utils.lib {inherit pkgs;};
+        # inherit (pkgs) stdenv lib;
+        inherit (pkgs) stdenv ;
 
         metpy = inputs.nixpkgs.lib.overrideDerivation (oldDrv: {
           pname = "metpy";
@@ -44,15 +47,42 @@
           doCheck = false;
         });
 
-        # metpy = pkgs.buildPythonPackage rec {
-        geocat = inputs.nixpkgs.buildPythonPackage rec {
+        cmaps = inputs.nixpkgs.lib.overrideDerivation (oldDrv: {
+          pname = "cmaps";
+          version = "1.0.5";
+          src = inputs.nixpkgs.fetchFromGitHub {
+            owner = "hhuangwx";
+            repo = "cmaps";
+            rev = "master";
+            sha256 = "sha256-FvqYBvrMJPMfRUuJh0HsVjmnK6nU/4oZrQ6UYp2Ty5U=";
+          };
+          doCheck = false;
+        });
+
+        geocat = inputs.nixpkgs.lib.overrideDerivation (oldDrv: {
           pname = "geocat.viz";
           version = "0.9.1";
-          src = inputs.nixpkgs.python3Packages.fetchPypi {
-            inherit pname version;
-            sha256 = "1hkyw2avwpj2f1qx2d2v9pf9xxr8r6f3j0bwq3l3gzb6w8ayppj1";
+          src = inputs.nixpkgs.fetchFromGitHub {
+            owner = "Unidata";
+            repo = "MetPy";
+            rev = "v1.0.1";
+            sha256 = "sha256-FvqYBvrMJPMfRUuJh0HsVjmnK6nU/4oZrQ6UYp2Ty5U=";
           };
-        };
+          buildInputs = with inputs.nixpkgs; [
+            matplotlib
+            numpy
+            pandas
+            pint
+            pooch
+            pyproj
+            scipy
+            traitlets
+            xarray
+            importlib-resources
+            importlib-metadata
+          ];
+          doCheck = false;
+        });
 
         pythonPackages = lib.fix' (self:
           with self;
@@ -129,9 +159,9 @@
                 click
                 wheel
                 cartopy
-                metpy
+                # metpy
                 # cmaps
-                # geocat
+                geocat
                 contourpy
                 cycler
                 flask

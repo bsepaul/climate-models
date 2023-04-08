@@ -39,12 +39,12 @@ pkgs: self: super: rec {
   #   # };
   # };
 
-  # geocat = buildPythonPackage rec {
-  #   pname = "geocat.viz";
-  #   version = "0.9.1";
-  #   src = fetchPypi {
-  #     inherit pname version;
-  #     sha256 = "1hkyw2avwpj2f1qx2d2v9pf9xxr8r6f3j0bwq3l3gzb6w8ayppj1";
-  #   };
-  # };
+  geocat = buildPythonPackage rec {
+    pname = "geocat.viz";
+    version = "0.9.1";
+    src = fetchPypi {
+      inherit pname version;
+      sha256 = "1hkyw2avwpj2f1qx2d2v9pf9xxr8r6f3j0bwq3l3gzb6w8ayppj1";
+    };
+  };
 }
