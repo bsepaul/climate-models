@@ -20,69 +20,7 @@
 
         lib = import flake-utils.lib {inherit pkgs;};
         # inherit (pkgs) stdenv lib;
-        inherit (pkgs) stdenv ;
-
-        metpy = inputs.nixpkgs.lib.overrideDerivation (oldDrv: {
-          pname = "metpy";
-          version = "1.0.1";
-          src = inputs.nixpkgs.fetchFromGitHub {
-            owner = "Unidata";
-            repo = "MetPy";
-            rev = "v1.0.1";
-            sha256 = "sha256-FvqYBvrMJPMfRUuJh0HsVjmnK6nU/4oZrQ6UYp2Ty5U=";
-          };
-          buildInputs = with inputs.nixpkgs; [
-            matplotlib
-            numpy
-            pandas
-            pint
-            pooch
-            pyproj
-            scipy
-            traitlets
-            xarray
-            importlib-resources
-            importlib-metadata
-          ];
-          doCheck = false;
-        });
-
-        cmaps = inputs.nixpkgs.lib.overrideDerivation (oldDrv: {
-          pname = "cmaps";
-          version = "1.0.5";
-          src = inputs.nixpkgs.fetchFromGitHub {
-            owner = "hhuangwx";
-            repo = "cmaps";
-            rev = "master";
-            sha256 = "sha256-FvqYBvrMJPMfRUuJh0HsVjmnK6nU/4oZrQ6UYp2Ty5U=";
-          };
-          doCheck = false;
-        });
-
-        geocat = inputs.nixpkgs.lib.overrideDerivation (oldDrv: {
-          pname = "geocat.viz";
-          version = "0.9.1";
-          src = inputs.nixpkgs.fetchFromGitHub {
-            owner = "Unidata";
-            repo = "MetPy";
-            rev = "v1.0.1";
-            sha256 = "sha256-FvqYBvrMJPMfRUuJh0HsVjmnK6nU/4oZrQ6UYp2Ty5U=";
-          };
-          buildInputs = with inputs.nixpkgs; [
-            matplotlib
-            numpy
-            pandas
-            pint
-            pooch
-            pyproj
-            scipy
-            traitlets
-            xarray
-            importlib-resources
-            importlib-metadata
-          ];
-          doCheck = false;
-        });
+        inherit (pkgs) stdenv;
 
         pythonPackages = lib.fix' (self:
           with self;
@@ -149,6 +87,78 @@
                 ];
               };
             });
+
+        metpy = with pkgs.python310Packages;
+          buildPythonPackage rec {
+            pname = "MetPy";
+            version = "1.4.1";
+            src = fetchPypi {
+              inherit pname version;
+              sha256 = "sha256-oT3S2jYOv9hWJw5BdG5P1Uutyp3NvYASKegDgs4x27k=";
+            };
+            buildInputs = with inputs.nixpkgs; [
+              matplotlib
+              numpy
+              pandas
+              pint
+              pooch
+              pyproj
+              scipy
+              traitlets
+              xarray
+              importlib-resources
+              importlib-metadata
+            ];
+            doCheck = false;
+          };
+
+        cmaps = with pkgs.python310Packages;
+          buildPythonPackage rec {
+            pname = "cmaps";
+            version = "1.0.5";
+            src = fetchPypi {
+              inherit pname version;
+              sha256 = "sha256-jucIv2xAJNzQYNZYqgy7p0CsBHLlY4UStHZN6h6SjEY=";
+            };
+            buildInputs = with inputs.nixpkgs; [
+              numpy
+              matplotlib
+              traitlets
+              # pandas
+              # pint
+              # pooch
+              # pyproj
+              # scipy
+              # xarray
+              # importlib-resources
+              # importlib-metadata
+            ];
+            doCheck = false;
+          };
+
+        geocat = with pkgs.python310Packages;
+          buildPythonPackage rec {
+            pname = "geocat.viz";
+            version = "2023.3.0.post0";
+            src = fetchPypi {
+              inherit pname version;
+              sha256 = "sha256-gs6Hz71GVwwxAEkMSBmLHHm5XBzwcx8x57yah2492Ig=";
+            };
+
+            buildInputs = with inputs.nixpkgs; [
+              matplotlib
+              xarray
+              numpy
+              setuptools
+              scikit-learn
+              traitlets
+            ];
+            propagatedBuildInputs = [
+              cartopy
+              cmaps
+              metpy
+            ];
+          };
       in rec {
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
@@ -159,8 +169,8 @@
                 click
                 wheel
                 cartopy
-                # metpy
-                # cmaps
+                metpy
+                cmaps
                 geocat
                 contourpy
                 cycler
