@@ -124,41 +124,20 @@
               numpy
               matplotlib
               traitlets
-              # pandas
-              # pint
-              # pooch
-              # pyproj
-              # scipy
-              # xarray
-              # importlib-resources
-              # importlib-metadata
             ];
             doCheck = false;
           };
 
-        geocat = with pkgs.python310Packages;
-          buildPythonPackage rec {
-            pname = "geocat.viz";
-            version = "2023.3.0.post0";
-            src = fetchPypi {
-              inherit pname version;
-              sha256 = "sha256-gs6Hz71GVwwxAEkMSBmLHHm5XBzwcx8x57yah2492Ig=";
-            };
-
-            buildInputs = with inputs.nixpkgs; [
-              matplotlib
-              xarray
-              numpy
-              setuptools
-              scikit-learn
-              traitlets
-            ];
-            propagatedBuildInputs = [
-              cartopy
-              cmaps
-              metpy
-            ];
+        geocat-viz = pkgs.python3Packages.buildPythonPackage rec {
+          pname = "geocat.viz";
+          # version = "2022.7.0";
+          version = "2023.3.0.post0";
+          src = pkgs.python3Packages.fetchPypi {
+            inherit pname version;
+            sha256 = "sha256-gs6Hz71GVwwxAEkMSBmLHHm5XBzwcx8x57yah2492Ig=";
           };
+          propagatedBuildInputs = with pkgs.python3Packages; [cmaps metpy cartopy xarray scikit-learn pint traitlets pooch];
+        };
       in rec {
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
@@ -171,7 +150,7 @@
                 cartopy
                 metpy
                 cmaps
-                geocat
+                geocat-viz
                 contourpy
                 cycler
                 flask
