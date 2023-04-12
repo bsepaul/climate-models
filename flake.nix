@@ -1,4 +1,3 @@
-# THis is my current flake.nix but I am getting the following error
 {
   inputs = {
     nixpkgs = {
@@ -7,21 +6,21 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
-    # cmaps-src = {
-    #   url = "github:hhuangwx/cmaps";
-    # };
   };
   outputs = {
     nixpkgs,
     flake-utils,
     ...
-  }:
+  } @ inputs:
     flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = import nixpkgs {
           inherit system;
         };
-        inherit (pkgs) stdenv lib;
+
+        lib = import flake-utils.lib {inherit pkgs;};
+        # inherit (pkgs) stdenv lib;
+        inherit (pkgs) stdenv;
 
         pythonPackages = lib.fix' (self:
           with self;
@@ -87,21 +86,58 @@
                   "test_gridliner_labels_bbox_style"
                 ];
               };
-
-              # cmaps = buildPythonPackage rec {
-              #   pname = "cmaps";
-              #   version = "0.1.0";
-              #   src = cmaps-src;
-              #   meta = with pkgs.stdenv.lib; {
-              #     description = "Colormaps for scientific visualization.";
-              #     homepage = "https://github.com/hhuangwx/cmaps";
-              #     license = licenses.mit;
-              #     maintainers = [maintainers.yourname];
-              #   };
-              # };
-              # geocat.viz =  buildPythonPackage rec {
-              # metpy =  buildPythonPackage rec {
             });
+
+        metpy = with pkgs.python310Packages;
+          buildPythonPackage rec {
+            pname = "MetPy";
+            version = "1.4.1";
+            src = fetchPypi {
+              inherit pname version;
+              sha256 = "sha256-oT3S2jYOv9hWJw5BdG5P1Uutyp3NvYASKegDgs4x27k=";
+            };
+            buildInputs = with inputs.nixpkgs; [
+              matplotlib
+              numpy
+              pandas
+              pint
+              pooch
+              pyproj
+              scipy
+              traitlets
+              xarray
+              importlib-resources
+              importlib-metadata
+            ];
+            doCheck = false;
+          };
+
+        cmaps = with pkgs.python310Packages;
+          buildPythonPackage rec {
+            pname = "cmaps";
+            version = "1.0.5";
+            src = fetchPypi {
+              inherit pname version;
+              sha256 = "sha256-jucIv2xAJNzQYNZYqgy7p0CsBHLlY4UStHZN6h6SjEY=";
+            };
+            buildInputs = with inputs.nixpkgs; [
+              numpy
+              matplotlib
+              traitlets
+            ];
+            doCheck = false;
+          };
+
+        geocat-viz = pkgs.python3Packages.buildPythonPackage rec {
+          pname = "geocat.viz";
+          # version = "2022.7.0";
+          version = "2023.3.0.post0";
+          src = pkgs.python3Packages.fetchPypi {
+            inherit pname version;
+            sha256 = "sha256-gs6Hz71GVwwxAEkMSBmLHHm5XBzwcx8x57yah2492Ig=";
+          };
+          propagatedBuildInputs = with pkgs.python3Packages; [cmaps metpy cartopy xarray scikit-learn pint traitlets pooch];
+        };
       in rec {
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
@@ -112,9 +148,9 @@
                 click
                 wheel
                 cartopy
-                # cmaps
-                # geocat.viz
-                # metpy
+                metpy
+                cmaps
+                geocat-viz
                 contourpy
                 cycler
                 flask
