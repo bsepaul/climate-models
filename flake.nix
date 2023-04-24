@@ -1,3 +1,4 @@
+# storage file size: 10 TB
 {
   inputs = {
     nixpkgs = {
