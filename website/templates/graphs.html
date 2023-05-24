@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block graph_container %}
+<div class="graphs">
+   {% for graph in graphs %}
+   <div class="graph-container">
+      {{ graph | safe }}
+   </div>
+   {% endfor %}
+</div>
+{% endblock %}
