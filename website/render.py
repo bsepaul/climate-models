@@ -1,5 +1,6 @@
-from temperature import TemperaturePlot
-from precipitation import PrecipitationPlot
+from surface_temperature import SurfaceTemperaturePlot
+from precipitation_amount import PrecipitationAmountPlot
+from precipitation_rate import PrecipitationRatePlot
 import mpld3
 
 # function to create a dictionary of graph information so that it can be easily parsed through to render the correct graphs
@@ -29,8 +30,9 @@ def render(html_data):
     # data format that can be easily parsed
     # {'plots': ['sfcTemp', 'pcpRate', 'pcpAmnt'], 'months': ['04', '05', '06']}
 
-    # Empty list to store html strings for each graph requested
+    # Empty list to store html strings of interactive and pdf forms for each graph requested
     graphs = []
+    pdfs = []
 
     # Iterate through plot types requested and make graph for each plot
     for plot in  data["plots"]:
@@ -39,27 +41,27 @@ def render(html_data):
 
         if plot == "sfcTemp":
             # Create surface temperature plot
-            testPlot = TemperaturePlot( data["months"])
+            testPlot = SurfaceTemperaturePlot(months = data["months"])
 
         elif plot == "pcpRate":
             # Create precipitation rate plot
-            testPlot = PrecipitationPlot(type="rate", months= data["months"])
+            testPlot = PrecipitationRatePlot(months= data["months"])
         
         elif plot == "pcpAmnt":
             # Create precipitation amount plot
-            testPlot = PrecipitationPlot(type="amount", months= data["months"])
+            testPlot = PrecipitationAmountPlot(months= data["months"])
 
-        # Set the data
-        testPlot.set_data()
-
-        # Get the figure
-        fig = testPlot.make_fig()
+        # Set the data, make the figure, and create the pdf
+        testPlot.create_plot()
 
         # Convert figure to an html string
-        graph = mpld3.fig_to_html(fig)
+        graph = mpld3.fig_to_html(testPlot.fig)
 
         # Add the new graph to the list of graphs to be updated in the html file
         graphs.append(graph)
 
+        # Add the new pdf of the graph
+        pdfs.append(testPlot.pdf)
+
     # Return the list of graphs to be rendered in the html file
-    return graphs
+    return {"graphs":graphs, "pdfs":pdfs}
