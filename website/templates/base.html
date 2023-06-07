@@ -6,14 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
         <link rel="icon" href="{{url_for('static', filename='globe.png')}}">
-        <script>
-                function change_state(obj) {
-                        //if checkbox is being checked, add a "checked" class
-                        if (obj.checked) { obj.parentNode.classList.add("checked"); }
-                        //else remove it
-                        else { obj.parentNode.classList.remove("checked"); }
-                }
-        </script>
+        <script type="text/javascript" src="{{url_for('static', filename='script.js')}}"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
         <title>
                 Climate Models
@@ -27,6 +20,9 @@
                         <div class="options">
                                 <label class="select"><input onchange="change_state(this)" type="checkbox"
                                                 name="sfcTemp" id="sfcTemp" /> Surface Temperature </label>
+                                <label class="select"><input onchange="change_state(this)" type="checkbox"
+                                                name="tempElev" id="tempElev" /> Elevation Temperature </label>
+                                <input type="range" min="0" max="29" value="15" name="elevation" id="elevation">
                                 <label class="select"><input onchange="change_state(this)" type="checkbox"
                                                 name="pcpRate" id="pcpRate" /> Precipitation Rate </label>
                                 <label class="select"><input onchange="change_state(this)" type="checkbox"

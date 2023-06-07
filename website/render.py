@@ -1,21 +1,23 @@
 from surface_temperature import SurfaceTemperaturePlot
 from precipitation_amount import PrecipitationAmountPlot
 from precipitation_rate import PrecipitationRatePlot
+from temperature_elevation import ElevationTemperature
 import mpld3
 
 # function to create a dictionary of graph information so that it can be easily parsed through to render the correct graphs
 def parse(html_data):
 
     # create an empty dictionary to store values selected by the user in the html form
-    data = {"plots": [], "months": []}
+    data = {"plots": [], "months": [], "elevation": 0}
 
     # lists of total possible selections
-    plots = ["sfcTemp", "pcpRate", "pcpAmnt"]
+    plots = ["sfcTemp", "tempElev", "pcpRate", "pcpAmnt"]
     months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
 
     # find intersection of total list and user's selected list to parse out values and separate them for the dictionary
     data["plots"] = [plot for plot in html_data if plot in plots]
     data["months"] = [month for month in html_data if month in months]
+    data["elevation"] = int(html_data["elevation"])
 
     return data
 
@@ -42,6 +44,10 @@ def render(html_data):
         if plot == "sfcTemp":
             # Create surface temperature plot
             testPlot = SurfaceTemperaturePlot(months = data["months"])
+
+        elif plot == "tempElev":
+            # Create surface temperature plot
+            testPlot = ElevationTemperature(months = data["months"], elevation=data["elevation"])
 
         elif plot == "pcpRate":
             # Create precipitation rate plot
