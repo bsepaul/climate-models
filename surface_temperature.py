@@ -38,7 +38,7 @@ class SurfaceTemperaturePlot(Plot):
             self.data = self.ds.TS
             self.ds.close()
 
-        # AttributeError: attribute PRECC or PRECL was not found in the file
+        # AttributeError: attribute TS was not found in the file
         except AttributeError:
             print("Dataset is missing \'TS\' attribute")
             exit()

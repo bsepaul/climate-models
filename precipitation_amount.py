@@ -37,9 +37,9 @@ class PrecipitationAmountPlot(Plot):
             # Average the values by dividing the values by the number of months
             self.data = self.ds.TMQ
 
-        # AttributeError: attribute PRECC or PRECL was not found in the file
+        # AttributeError: attribute TMQ was not found in the file
         except AttributeError:
-            print("Dataset is missing either \'PRECC\' or \'PRECL\' attribute")
+            print("Dataset is missing \'TMQ\' attribute")
             exit()
         
         # Another error occurred while accessing the data
