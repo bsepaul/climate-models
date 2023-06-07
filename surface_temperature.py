@@ -9,6 +9,15 @@ from io import BytesIO
 from netCDF4 import Dataset
 from plot import Plot
 
+# INFORMATION ON TS ATTRIBUTE FOR NETCDF DATA
+# filling on, default _FillValue of 9.969209968386869e+36 used, 'TS': <class 'netCDF4._netCDF4.Variable'>
+# float32 TS(time, lat, lon)
+#     units: K
+#     long_name: Surface temperature (radiative)
+#     cell_methods: time: mean
+# unlimited dimensions: time
+# current shape = (12, 96, 144)
+
 class SurfaceTemperaturePlot(Plot):
 
     def __init__(self, months, color="viridis", central_longitude=0):

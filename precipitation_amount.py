@@ -10,6 +10,15 @@ import base64
 from io import BytesIO
 from plot import Plot
 
+# INFORMATION ON TMQ ATTRIBUTE FOR NETCDF DATA
+# filling on, default _FillValue of 9.969209968386869e+36 used, 'TMQ': <class 'netCDF4._netCDF4.Variable'>
+# float32 TMQ(time, lat, lon)
+#     units: kg/m2
+#     long_name: Total (vertically integrated) precipitable water
+#     cell_methods: time: mean
+# unlimited dimensions: time
+# current shape = (12, 96, 144)
+
 class PrecipitationAmountPlot(Plot):
 
     def __init__(self, months, color="viridis", central_longitude=0):

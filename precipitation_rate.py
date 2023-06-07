@@ -10,6 +10,24 @@ import base64
 from io import BytesIO
 from plot import Plot
 
+# INFORMATION ON PRECC ATTRIBUTE FOR NETCDF DATA
+# filling on, default _FillValue of 9.969209968386869e+36 used, 'PRECC': <class 'netCDF4._netCDF4.Variable'>
+# float32 PRECC(time, lat, lon)
+#     units: m/s
+#     long_name: Convective precipitation rate (liq + ice)
+#     cell_methods: time: mean
+# unlimited dimensions: time
+# current shape = (12, 96, 144)
+
+# INFORMATION ON PRECL ATTRIBUTE FOR NETCDF DATA
+# filling on, default _FillValue of 9.969209968386869e+36 used, 'PRECL': <class 'netCDF4._netCDF4.Variable'>
+# float32 PRECL(time, lat, lon)
+#     units: m/s
+#     long_name: Large-scale (stable) precipitation rate (liq + ice)
+#     cell_methods: time: mean
+# unlimited dimensions: time
+# current shape = (12, 96, 144)
+
 class PrecipitationRatePlot(Plot):
 
     def __init__(self, months, color="viridis", central_longitude=0):
