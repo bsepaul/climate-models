@@ -59,9 +59,9 @@ class Plot:
         # plot the first time slice
         plot = self.data[0, :, :].plot.contourf(ax=ax,
                                         transform=ccrs.PlateCarree(),
-                                        vmin=0,
+                                        vmin=min,
                                         vmax = max,
-                                        levels = max*20,
+                                        levels = 30,
                                         cmap = self.color,
                                         cbar_kwargs = {
                                             "extendrect":True,
