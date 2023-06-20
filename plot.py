@@ -33,11 +33,10 @@ class Plot:
     def make_fig(self):
 
         max = min = self.data.values[0][0][0]
-        for chunk in self.data.values:
-            for temps in chunk:
-                for temp in temps:
-                    if temp > max: max = temp
-                    elif temp < min: min = temp
+        for values in self.data.values[0]:
+            for value in values:
+                if value > max: max = value
+                elif value < min: min = value
         max = math.ceil(max)
         min = math.floor(min)
 
