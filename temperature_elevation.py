@@ -24,7 +24,7 @@ class ElevationTemperature(Plot):
     def __init__(self, months, elevation, color="viridis", central_longitude=0):
 
         # Initiate instance of super class: Plot
-        super().__init__(months, color, central_longitude, "Global Elevation Temperature", "K", "temp_elev_plot.pdf")
+        super().__init__(months, color, central_longitude, "Global Elevation Temperature Difference", "K", "temp_elev_plot.pdf")
 
         self.elevation = elevation
         self.ds_a = None
@@ -46,8 +46,27 @@ class ElevationTemperature(Plot):
             data_a = self.ds_a.T[:, self.elevation]
             data_b = self.ds_b.T[:, self.elevation]
 
-            # get the difference
+            # these values should be equal but in order to avoid index errors
+            # get each length for iterating and averaging
+            length_a = len(data_a.values)
+            length_b = len(data_b.values)
+
+            # sum together values for all time slices onto the first time slice
+            for i in range(1, length_a):
+                data_a.values[0] += data_a.values[i]
+            for i in range(1, length_b):
+                data_b.values[0] += data_b.values[i]
+
+            # get the average by dividing by the length
+            data_a.values[0] = data_a.values[0] / length_a
+            data_b.values[0] = data_b.values[0] / length_b
+
+            # store the difference of the data sets in self.data to be used for plotting
             self.data = data_a - data_b
+
+            # close datasets
+            self.ds_a.close()
+            self.ds_b.close()
 
         # AttributeError: attribute T was not found in the file
         except AttributeError:
