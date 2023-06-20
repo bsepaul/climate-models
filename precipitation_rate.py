@@ -39,16 +39,15 @@ class PrecipitationRatePlot(Plot):
     def set_data(self):
 
         # get the data from the first month in the list of months
-        first_month = self.months[0]
-        file = "netcdf_files_full/b.e12.B1850.T31_g37.1x.cam.h0.3000-{}.nc".format(first_month)
+        file = f"netcdf_files_full/b.e12.B1850.T31_g37.1x.cam.h0.3000-{self.months[0]}.nc"
         self.ds = xr.open_dataset(file, decode_times=False)
-        print("collecting data from file: {}".format(file))
+        print(f"collecting data from file: {file}")
 
         try:
             # Go through each month's file and sum both precipitation values, PRECC and PRECL
             for month in self.months[1:]:
-                file = "netcdf_files_full/b.e12.B1850.T31_g37.1x.cam.h0.3000-{}.nc".format(month)
-                print("collecting data from file: {}".format(file))
+                file = f"netcdf_files_full/b.e12.B1850.T31_g37.1x.cam.h0.3000-{month}.nc"
+                print(f"collecting data from file: {file}")
                 next_ds = xr.open_dataset(file, decode_times=False)
                 self.ds.PRECC.values += next_ds.PRECC.values
                 self.ds.PRECL.values += next_ds.PRECL.values
@@ -65,7 +64,7 @@ class PrecipitationRatePlot(Plot):
         
         # Another error occurred while accessing the data
         except:
-            print("Something went wrong while accessing the data file: {}".format(file))
+            print(f"Something went wrong while accessing the data file: {file}")
             exit()
 
         # Average the values by dividing the values by the number of months

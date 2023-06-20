@@ -38,8 +38,7 @@ def render(html_data):
 
     # Iterate through plot types requested and make graph for each plot
     for plot in  data["plots"]:
-        print("User is requesting a {} plot for the months: {}".format(
-            plot,  data["months"]))
+        print(f"User is requesting a {plot} plot for the months: {data['months']}")
 
         if plot == "sfcTemp":
             # Create surface temperature plot
