@@ -12,6 +12,10 @@ def home():
         # Get the list of html strings, each representing one graph, using the render function (render.py)
         renders = render(request.form)
 
+        # if user did not select a graph type or any months don't render the graph
+        if renders == None:
+            return render_template('home.html')
+
         # Pass the list of graphs into the graph.html template
         return render_template('graphs.html', renders=zip(renders["graphs"], renders["pdfs"]))
 

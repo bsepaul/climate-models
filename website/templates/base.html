@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
         <link rel="icon" href="{{url_for('static', filename='globe.png')}}">
-        <script type="text/javascript" src="{{url_for('static', filename='script.js')}}"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='script.js')}}"></script>
         <title>
                 Climate Models
         </title>
@@ -17,48 +17,54 @@
         <div class="content">
                 <div class="title">CLIMATE MODELS</div>
                 <form method="POST">
-                        <div class="options">
-                                <label class="select"><input onchange="change_state(this)" type="checkbox"
-                                                name="sfcTemp" id="sfcTemp" /> Surface Temperature </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox"
-                                                name="tempElev" id="tempElev" /> Elevation Temperature </label>
-                                <input type="range" min="0" max="29" value="15" name="elevation" id="elevation">
-                                <label class="select"><input onchange="change_state(this)" type="checkbox"
-                                                name="pcpRate" id="pcpRate" /> Precipitation Rate </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox"
-                                                name="pcpAmnt" id="pcpAmnt" /> Precipitation Amount </label>
+                        <div class="graph-selection">
+
+                                <input type="radio" name="graphType" value="sfcTemp" id="sfcTemp">
+                                <label for="sfcTemp">Surface Temperature</label>
+
+                                <input type="radio" name="graphType" value="tempElev" id="tempElev">
+                                <label for="tempElev">Elevation Temperature</label>
+
+                                <input type="radio" name="graphType" value="pcpRate" id="pcpRate">
+                                <label for="pcpRate">Precipitation Rate</label>
+
+                                <input type="radio" name="graphType" value="pcpAmnt" id="pcpAmnt">
+                                <label for="pcpAmnt">Precipitation Amount</label>
                         </div>
-                        <div class="options">
-                                <label class="select"><input onchange="change_state(this)" type="checkbox" name="01"
-                                                id="jan" /> Jan </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox" name="02"
-                                                id="feb" /> Feb </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox" name="03"
-                                                id="mar" /> Mar </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox" name="04"
-                                                id="apr" /> Apr </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox" name="05"
-                                                id="may" /> May </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox" name="06"
-                                                id="jun" /> Jun </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox" name="07"
-                                                id="jul" /> Jul </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox" name="08"
-                                                id="aug" /> Aug </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox" name="09"
-                                                id="sep" /> Sep </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox" name="10"
-                                                id="oct" /> Oct </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox" name="11"
-                                                id="nov" /> Nov </label>
-                                <label class="select"><input onchange="change_state(this)" type="checkbox" name="12"
-                                                id="dec" /> Dec </label>
+                        <div class="sfcTemp options">
+                                <div class="section"></div>
                         </div>
-                        <div class="options">
+                        <div class="tempElev options">
+                                <div class="section">
+                                        <input type="range" min="0" max="29" value="15" name="elevation" id="elevation">
+                                </div>
+                        </div>
+                        <div class="pcpRate options">
+                                <div class="section"></div>
+                        </div>
+                        <div class="pcpAmnt options">
+                                <div class="section"></div>
+                        </div>
+
+                        <div class="month-selection">
+                                <input type="checkbox" name="month" value="01" id="jan" /><label for="jan">Jan</label>
+                                <input type="checkbox" name="month" value="02" id="feb" /><label for="feb">Feb</label>
+                                <input type="checkbox" name="month" value="03" id="mar" /><label for="mar">Mar</label>
+                                <input type="checkbox" name="month" value="04" id="apr" /><label for="apr"> Apr </label>
+                                <input type="checkbox" name="month" value="05" id="may" /><label for="may"> May </label>
+                                <input type="checkbox" name="month" value="06" id="jun" /><label for="jun">Jun</label>
+                                <input type="checkbox" name="month" value="07" id="jul" /><label for="jul">Jul</label>
+                                <input type="checkbox" name="month" value="08" id="aug" /><label for="aug">Aug</label>
+                                <input type="checkbox" name="month" value="09" id="sep" /><label for="sep">Sep</label>
+                                <input type="checkbox" name="month" value="10" id="oct" /><label for="oct">Oct</label>
+                                <input type="checkbox" name="month" value="11" id="nov" /><label for="nov">Nov</label>
+                                <input type="checkbox" name="month" value="12" id="dec" /><label for="dec">Dec</label>
+                        </div>
+                        <div class="section">
                                 <button type="submit" class="button" id="createModel">Create Model</button>
                         </div>
                 </form>
-                <div class="options">
+                <div class="section">
                         <!-- Insert graphs below this line -->
                         {% block graph_container %}
                         {% endblock %}

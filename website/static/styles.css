@@ -88,6 +88,41 @@ html {
     border-radius: 30px;
 }
 
+.graph-selection {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+
+.graph-selection input[type="radio"] {
+    display: none;
+}
+
+.graph-selection label {
+    display: inline-block;
+    height: 20px;
+    border: 1px solid white;
+    border-radius: 18px;
+    font-size: 16px;
+    padding: 7px 16px;
+    background: var(--darkBlue);
+    color: var(--white);
+    margin: 10px;
+    cursor: pointer;
+}
+
+.graph-selection input[type="radio"]:checked+label {
+    background: var(--white) !important;
+    color: var(--darkBlue) !important;
+}
+
+.graph-selection label:hover {
+    background: var(--blue);
+    transition-duration: 0.5s;
+}
+
 .graphs {
     display: grid;
     grid-template-columns: 100%;
@@ -97,11 +132,43 @@ html {
     margin-bottom: 100px;
 }
 
-.options {
+.month-selection {
     display: flex;
     margin: auto;
     justify-content: center;
     padding: 10px;
+    flex-wrap: wrap;
+}
+
+.month-selection input[type="checkbox"] {
+    display: none;
+}
+
+.month-selection label {
+    display: inline-block;
+    height: 20px;
+    border: 1px solid white;
+    border-radius: 18px;
+    font-size: 16px;
+    padding: 7px 16px;
+    background: var(--darkBlue);
+    color: var(--white);
+    margin: 10px;
+    cursor: pointer;
+}
+
+.month-selection input[type="checkbox"]:checked+label {
+    background: var(--white) !important;
+    color: var(--darkBlue) !important;
+}
+
+.month-selection label:hover {
+    background: var(--blue);
+    transition-duration: 0.5s;
+}
+
+.options {
+    display: none;
 }
 
 .pdf-link {
@@ -131,30 +198,12 @@ html {
     color: var(--white);
 }
 
-.select {
-    display: inline-block;
-    height: 20px;
-    border: 1px solid white;
-    border-radius: 18px;
-    font-size: 16px;
-    padding: 7px 16px;
-    background: var(--darkBlue);
-    color: var(--white);
-    margin: 10px;
-}
-
-.select:hover {
-    background: var(--blue);
-    transition-duration: 0.5s;
-}
-
-.select.checked {
-    background: var(--white);
-    color: var(--darkBlue);
-}
-
-.select input {
-    display: none;
+.section {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    padding: 10px;
+    flex-wrap: wrap;
 }
 
 .title {

@@ -4,33 +4,21 @@ from precipitation_rate import PrecipitationRatePlot
 from temperature_elevation import ElevationTemperature
 import mpld3
 
-# function to create a dictionary of graph information so that it can be easily parsed through to render the correct graphs
-def parse(html_data):
+# render the graphs into html strings
+def render(html_data):
 
     # create an empty dictionary to store values selected by the user in the html form
     data = {"plots": [], "months": [], "elevation": 0}
 
-    # lists of total possible selections
-    plots = ["sfcTemp", "tempElev", "pcpRate", "pcpAmnt"]
-    months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
-
-    # find intersection of total list and user's selected list to parse out values and separate them for the dictionary
-    data["plots"] = [plot for plot in html_data if plot in plots]
-    data["months"] = [month for month in html_data if month in months]
+    # Attempt to extract user's selections from the html data
+    # If user didn't select any months, return None
+    data["months"] = html_data.getlist('month')
+    if data["months"] == []: return None
+    # If user didn't select any plot types, return None
+    data["plots"]  = html_data.getlist('graphType')
+    if data["plots"] == []: return None
+    # Elevation will always be passed due to default value
     data["elevation"] = int(html_data["elevation"])
-
-    return data
-
-# render the graphs into html strings
-def render(html_data):
-
-    # html_data format that cannot be easily parsed
-    # ImmutableMultiDict([('sfcTemp', 'on'), ('pcpRate', 'on'), ('pcpAmnt', 'on'), ('04', 'on'), ('05', 'on'), ('06', 'on')])
-    
-    data = parse(html_data)
-
-    # data format that can be easily parsed
-    # {'plots': ['sfcTemp', 'pcpRate', 'pcpAmnt'], 'months': ['04', '05', '06']}
 
     # Empty list to store html strings of interactive and pdf forms for each graph requested
     graphs = []
