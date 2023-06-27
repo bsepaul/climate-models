@@ -60,6 +60,41 @@ html {
     background: var(--white);
 }
 
+.color-selection {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+
+.color-selection input[type="radio"] {
+    display: none;
+}
+
+.color-selection label {
+    display: inline-block;
+    height: 20px;
+    border: 1px solid white;
+    border-radius: 18px;
+    font-size: 16px;
+    padding: 7px 16px;
+    background: var(--darkBlue);
+    color: var(--white);
+    margin: 10px;
+    cursor: pointer;
+}
+
+.color-selection input[type="radio"]:checked+label {
+    background: var(--white) !important;
+    color: var(--darkBlue) !important;
+}
+
+.color-selection label:hover {
+    background: var(--blue);
+    transition-duration: 0.5s;
+}
+
 .content {
     width: 80%;
     max-width: 1400px;

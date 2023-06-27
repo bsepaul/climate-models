@@ -6,9 +6,10 @@ import mpld3
 
 # render the graphs into html strings
 def render(html_data):
+    print(html_data)
 
     # create an empty dictionary to store values selected by the user in the html form
-    data = {"plots": [], "months": [], "elevation": 0}
+    data = {}
 
     # Attempt to extract user's selections from the html data
     # If user didn't select any months, return None
@@ -17,12 +18,15 @@ def render(html_data):
     # If user didn't select any plot types, return None
     data["plots"]  = html_data.getlist('graphType')
     if data["plots"] == []: return None
+    # Color will always be passed due to default value
+    data["color"] = html_data["color-"+html_data['graphType']]
     # Elevation will always be passed due to default value
     data["elevation"] = int(html_data["elevation"])
 
     # Empty list to store html strings of interactive and pdf forms for each graph requested
     graphs = []
     pdfs = []
+    print(data)
 
     # Iterate through plot types requested and make graph for each plot
     for plot in  data["plots"]:
@@ -30,19 +34,19 @@ def render(html_data):
 
         if plot == "sfcTemp":
             # Create surface temperature plot
-            testPlot = SurfaceTemperaturePlot(months = data["months"])
+            testPlot = SurfaceTemperaturePlot(months = data["months"], color = data["color"])
 
         elif plot == "tempElev":
             # Create surface temperature plot
-            testPlot = ElevationTemperature(months = data["months"], elevation=data["elevation"])
+            testPlot = ElevationTemperature(months = data["months"], color = data["color"], elevation=data["elevation"])
 
         elif plot == "pcpRate":
             # Create precipitation rate plot
-            testPlot = PrecipitationRatePlot(months= data["months"])
+            testPlot = PrecipitationRatePlot(months= data["months"], color = data["color"])
         
         elif plot == "pcpAmnt":
             # Create precipitation amount plot
-            testPlot = PrecipitationAmountPlot(months= data["months"])
+            testPlot = PrecipitationAmountPlot(months= data["months"], color = data["color"])
 
         # Set the data, make the figure, and create the pdf
         testPlot.create_plot()
