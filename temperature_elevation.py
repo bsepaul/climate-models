@@ -30,6 +30,10 @@ class ElevationTemperature(Plot):
         self.ds_a = None
         self.ds_b = None
 
+        # The files contain all 12 months' data so we are indexing the data differently
+        # Subtracting 1 because month "04" is April, which is indexed by 3
+        self.months = [(int(month)-1) for month in self.months]
+
     def set_data(self):
 
         try:
@@ -46,20 +50,17 @@ class ElevationTemperature(Plot):
             data_a = self.ds_a.T[:, self.elevation]
             data_b = self.ds_b.T[:, self.elevation]
 
-            # these values should be equal but in order to avoid index errors
-            # get each length for iterating and averaging
-            length_a = len(data_a.values)
-            length_b = len(data_b.values)
+            # get first month
+            first_month = self.months[0]
 
-            # sum together values for all time slices onto the first time slice
-            for i in range(1, length_a):
-                data_a.values[0] += data_a.values[i]
-            for i in range(1, length_b):
-                data_b.values[0] += data_b.values[i]
+            # sum together values for all selected months
+            for month in self.months[1:]:
+                data_a.values[first_month] += data_a.values[month]
+                data_b.values[first_month] += data_b.values[month]
 
-            # get the average by dividing by the length
-            data_a.values[0] = data_a.values[0] / length_a
-            data_b.values[0] = data_b.values[0] / length_b
+            # get the average by dividing by the length of month list
+            data_a.values[0] = data_a.values[first_month] / len(self.months)
+            data_b.values[0] = data_b.values[first_month] / len(self.months)
 
             # store the difference of the data sets in self.data to be used for plotting
             self.data = data_a - data_b
@@ -77,7 +78,3 @@ class ElevationTemperature(Plot):
         except:
             print("Something went wrong while accessing the data file")
             exit()
-
-if __name__ == '__main__':
-    plot = ElevationTemperature([], 0)
-    plot.create_plot()
