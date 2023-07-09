@@ -64,6 +64,7 @@ html {
     display: flex;
     margin: auto;
     justify-content: center;
+    align-items: center;
     padding: 10px;
     flex-wrap: wrap;
 }
@@ -75,7 +76,6 @@ html {
 .color-selection label {
     display: inline-block;
     height: 20px;
-    border: 1px solid white;
     border-radius: 18px;
     font-size: 16px;
     padding: 7px 16px;
@@ -83,16 +83,24 @@ html {
     color: var(--white);
     margin: 10px;
     cursor: pointer;
+    background-image: var(--file);
+    background-size: contain;
+    min-width: 110px;
+    text-align: center;
+    text-shadow: 0px 0px 5px var(--darkerBlue);
 }
 
 .color-selection input[type="radio"]:checked+label {
-    background: var(--white) !important;
-    color: var(--darkBlue) !important;
+    border: 2px solid white;
+    margin: 8px;
+    box-shadow: inset 0px 0px 40px var(--white);
 }
 
 .color-selection label:hover {
-    background: var(--blue);
+    border: 1px solid white;
+    margin: 9px;
     transition-duration: 0.5s;
+    box-shadow: inset 0px 0px 20px var(--white);
 }
 
 .content {
