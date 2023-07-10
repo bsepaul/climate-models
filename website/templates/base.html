@@ -50,7 +50,19 @@
                                 </div>
                                 {% if graph_type == 'tempElev' %}
                                 <div class="section">
-                                        <input type="range" min="0" max="29" value="15" name="elevation" id="elevation">
+                                        <div>
+                                                <input class="elevation" type="range" min="0" max="29" value="15" step="1" name="elevation">
+                                                <div class="ticks">
+                                                        {% for i in range(30) %}
+                                                        <span class="tick"></span>
+                                                        {% endfor %}
+                                                </div>
+                                                <div class="tick-nums">
+                                                        {% for i in range(30) %}
+                                                        <span class="tick-num">{{i}}</span>
+                                                        {% endfor %}
+                                                </div>
+                                        </div>
                                 </div>
                                 {% endif %}
                         </div>
