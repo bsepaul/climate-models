@@ -76,9 +76,11 @@ html {
 .color-selection label {
     display: inline-block;
     height: 20px;
-    border-radius: 18px;
+    border-radius: 21px;
+    border: 2px solid var(--darkBlue);
     font-size: 16px;
-    padding: 7px 16px;
+    font-weight: 400;
+    padding: 10px 20px;
     background: var(--darkBlue);
     color: var(--white);
     margin: 10px;
@@ -87,18 +89,17 @@ html {
     background-size: contain;
     min-width: 110px;
     text-align: center;
-    text-shadow: 0px 0px 5px var(--darkerBlue);
+    text-shadow: 0px 0px 15px var(--darkerBlue);
 }
 
 .color-selection input[type="radio"]:checked+label {
-    border: 2px solid white;
-    margin: 8px;
+    border: 2px solid var(--white);
+    transition-duration: 0.5s;
     box-shadow: inset 0px 0px 40px var(--white);
 }
 
 .color-selection label:hover {
-    border: 1px solid white;
-    margin: 9px;
+    border: 2px solid var(--white);
     transition-duration: 0.5s;
     box-shadow: inset 0px 0px 20px var(--white);
 }
