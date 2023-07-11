@@ -33,19 +33,28 @@
             </div>
             {% block selection %}
             {% set graph_types = ['sfcTemp', 'tempElev', 'pcpRate', 'pcpAmnt'] %}
+            {% set color_maps = [
+            {'code': 'jet', 'name': 'Jet', 'gradient': 'linear-gradient(90deg, #000082 0%, #1234F5 15%, #78FBDC 35%, #A5FC82 50%, #F0FE54 65%, #F3AE3D 75%, #EA3B24 85%, #7F170E 100%)'},
+            {'code': 'terrain', 'name': 'Terrain', 'gradient': 'linear-gradient(90deg, #333393 0%, #4396F6 15%, #5DCA72 25%, #A5FC82 40%, #FEFDA5 50%, #C0B480 60%, #7B5D56 75%, #BCAEAA 85%, #FDFCFC 100%)'},
+            {'code': 'PuBuGn', 'name': 'Purple Blue Green', 'gradient': 'linear-gradient(90deg, #FEF7FB 0%, #E6DFED 15%, #B5C2DC 35%, #74A5CA 50%, #4488A7 65%, #2B6555 85%, #1C4638 100%)'},
+            {'code': 'YlOrRd', 'name': 'Yellow Orange Red', 'gradient': 'linear-gradient(90deg, #FFFECF 0%, #FAE89E 15%, #F4BF69 35%, #ED904D 50%, #DF4A34 65%, #A6212C 85%, #761528 100%)'},
+            {'code': 'Greys', 'name': 'Greys', 'gradient': 'linear-gradient(90deg, #FEFEFE 0%, #DBDBDB 25%, #6B6B6B 65%, #020202 100%)'},
+            {'code': 'BrBG', 'name': 'Brown Bluegreen', 'gradient': 'linear-gradient(90deg, #4F3210 0%, #916025 10%, #C59F5C 25%, #E8D8AA 35%, #F5F3EE 50%, #8CC6BD 75%, #37756F 90%, #173C32 100%)'},
+            {'code': 'bwr', 'name': 'Blue White Red', 'gradient': 'linear-gradient(90deg, #0000F5 0%, #3838F5 10%, #7C7CF7 25%, #B7B7FA 35%, #FEFEFF 50%, #F09896 75%, #EB564F 90%, #EA3323 100%)'},
+            {'code': 'Spectral', 'name': 'Spectral', 'gradient': 'linear-gradient(90deg, #911C43 0%, #C64C52 10%, #E9905D 25%, #F6D088 35%, #FEFEC4 50%, #E3F1A3 60%, #ADD7A9 70%, #87C5A6 80%, #5794B3 90%, #5A519E 100%)'},
+            {'code': 'PuOr', 'name': 'Orange Purple', 'gradient': 'linear-gradient(90deg, #763F18 0%, #AD6225 10%, #E19F4E 25%, #F6D5A2 35%, #F7F5F3 50%, #D2D2E5 60%, #AEA7CC 70%, #837AAC 80%, #5B3F8D 85%, #290449 100%)'}
+            ] %}
             {% for graph_type in graph_types %}
             <div class="{{graph_type}} options">
                 <div class="color-selection">
-                    {% set color_maps = ['jet', 'terrain', 'PuBuGn', 'YlOrRd', 'Greys', 'BrBG', 'bwr', 'Spectral', 'PuOr'] %}
-                    {% set color_name = ['Jet', 'Terrain', 'Purple Blue Green', 'Yellow Orange Red', 'Greys', 'Brown Bluegreen', 'Blue White Red', 'Spectral', 'Purple Orange'] %}
                     {% for index in range(color_maps|length) %}
                     {% set color = color_maps[index] %}
                     {% if index == 0 %}
-                    <input type="radio" name="color-{{graph_type}}" value={{color}} id='color-{{graph_type}}-{{index}}' checked>
+                    <input type="radio" name="color-{{graph_type}}" value={{color.code}} id='color-{{graph_type}}-{{index}}' checked>
                     {% else %}
-                    <input type="radio" name="color-{{graph_type}}" value={{color}} id='color-{{graph_type}}-{{index}}'>
+                    <input type="radio" name="color-{{graph_type}}" value={{color.code}} id='color-{{graph_type}}-{{index}}'>
                     {% endif %}
-                    <label style="--file: url(color-maps/{{color}}.png);" for='color-{{graph_type}}-{{index}}'>{{color_name[index]}}</label>
+                    <label style="--gradient: {{color.gradient}};" for='color-{{graph_type}}-{{index}}'>{{color.name}}</label>
                     {% endfor %}
                 </div>
                 {% if graph_type == 'tempElev' %}

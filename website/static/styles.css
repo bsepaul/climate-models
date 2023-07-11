@@ -204,11 +204,11 @@ html {
     cursor: pointer;
     border: 2px solid var(--darkBlue);
     font-weight: 400;
-    background-image: var(--file);
+    background-image: var(--gradient);
     background-size: contain;
     min-width: 110px;
     text-align: center;
-    text-shadow: 0px 0px 15px var(--darkerBlue);
+    text-shadow: 0px 0px 5px black;
 }
 
 /* Style the labels when hovered over by the user */
@@ -353,7 +353,7 @@ input[type=range]:focus::-ms-fill-upper {
 /* ************************************* */
 
 .tick {
-    width: 2px;
+    width: 1.5px;
     height: 8px;
     border-radius: 2px;
     background-color: var(--white);
