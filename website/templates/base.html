@@ -50,8 +50,8 @@
                 </div>
                 {% if graph_type == 'tempElev' %}
                 <div class="section">
-                    <div>
-                        <input class="elevation" type="range" min="0" max="29" value="15" step="1" name="elevation">
+                    <div class="center-vertical" style="width: 600px">
+                        <input type="range" min="0" max="29" value="15" step="1" name="elevation">
                         <div class="ticks">
                             {% for i in range(30) %}
                             <span class="tick"></span>
@@ -94,7 +94,7 @@
             <!-- Insert graphs above this line -->
         </div>
     </div>
-    <div class="footer">
+    <div class="footer text">
         Copyright &copy; 2023 | University of Connecticut - Computational Climate Change Lab
     </div>
 </body>
