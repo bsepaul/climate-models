@@ -2,101 +2,101 @@
 <html>
 
 <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-        <link rel="icon" href="{{url_for('static', filename='globe.png')}}">
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-        <script type="text/javascript" src="{{url_for('static', filename='script.js')}}"></script>
-        <title>
-                Climate Models
-        </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{url_for('static', filename='globe.png')}}">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='script.js')}}"></script>
+    <title>
+        Climate Models
+    </title>
 </head>
 
 <body>
-        <div class="content">
-                <div class="title">CLIMATE MODELS</div>
-                <form method="POST">
-                        <div class="graph-selection">
+    <div class="content">
+        <div class="title">CLIMATE MODELS</div>
+        <form method="POST">
+            <div class="graph-selection">
 
-                                <input type="radio" name="graphType" value="sfcTemp" id="sfcTemp">
-                                <label for="sfcTemp">Surface Temperature</label>
+                <input type="radio" name="graphType" value="sfcTemp" id="sfcTemp">
+                <label for="sfcTemp">Surface Temperature</label>
 
-                                <input type="radio" name="graphType" value="tempElev" id="tempElev">
-                                <label for="tempElev">Elevation Temperature</label>
+                <input type="radio" name="graphType" value="tempElev" id="tempElev">
+                <label for="tempElev">Elevation Temperature</label>
 
-                                <input type="radio" name="graphType" value="pcpRate" id="pcpRate">
-                                <label for="pcpRate">Precipitation Rate</label>
+                <input type="radio" name="graphType" value="pcpRate" id="pcpRate">
+                <label for="pcpRate">Precipitation Rate</label>
 
-                                <input type="radio" name="graphType" value="pcpAmnt" id="pcpAmnt">
-                                <label for="pcpAmnt">Precipitation Amount</label>
-                        </div>
-                        {% block selection %}
-                        {% set graph_types = ['sfcTemp', 'tempElev', 'pcpRate', 'pcpAmnt'] %}
-                        {% for graph_type in graph_types %}
-                        <div class="{{graph_type}} options">
-                                <div class="color-selection">
-                                        {% set color_maps = ['jet', 'terrain', 'PuBuGn', 'YlOrRd', 'Greys', 'BrBG', 'bwr', 'Spectral', 'PuOr'] %}
-                                        {% set color_name = ['Jet', 'Terrain', 'Purple Blue Green', 'Yellow Orange Red', 'Greys', 'Brown Bluegreen', 'Blue White Red', 'Spectral', 'Purple Orange'] %}
-                                        {% for index in range(color_maps|length) %}
-                                        {% set color = color_maps[index] %}
-                                        {% if index == 0 %}
-                                        <input type="radio" name="color-{{graph_type}}" value={{color}} id='color-{{graph_type}}-{{index}}' checked>
-                                        {% else %}
-                                        <input type="radio" name="color-{{graph_type}}" value={{color}} id='color-{{graph_type}}-{{index}}'>
-                                        {% endif %}
-                                        <label style="--file: url(color-maps/{{color}}.png);" for='color-{{graph_type}}-{{index}}'>{{color_name[index]}}</label>
-                                        {% endfor %}
-                                </div>
-                                {% if graph_type == 'tempElev' %}
-                                <div class="section">
-                                        <div>
-                                                <input class="elevation" type="range" min="0" max="29" value="15" step="1" name="elevation">
-                                                <div class="ticks">
-                                                        {% for i in range(30) %}
-                                                        <span class="tick"></span>
-                                                        {% endfor %}
-                                                </div>
-                                                <div class="tick-nums">
-                                                        {% for i in range(30) %}
-                                                        <span class="tick-num">{{i}}</span>
-                                                        {% endfor %}
-                                                </div>
-                                        </div>
-                                </div>
-                                {% endif %}
-                        </div>
-                        {% endfor %}
-                        {% endblock %}
-
-                        <div class="month-selection">
-                                <input type="checkbox" name="month" value="01" id="jan" /><label for="jan">Jan</label>
-                                <input type="checkbox" name="month" value="02" id="feb" /><label for="feb">Feb</label>
-                                <input type="checkbox" name="month" value="03" id="mar" /><label for="mar">Mar</label>
-                                <input type="checkbox" name="month" value="04" id="apr" /><label for="apr">Apr</label>
-                                <input type="checkbox" name="month" value="05" id="may" /><label for="may">May</label>
-                                <input type="checkbox" name="month" value="06" id="jun" /><label for="jun">Jun</label>
-                                <input type="checkbox" name="month" value="07" id="jul" /><label for="jul">Jul</label>
-                                <input type="checkbox" name="month" value="08" id="aug" /><label for="aug">Aug</label>
-                                <input type="checkbox" name="month" value="09" id="sep" /><label for="sep">Sep</label>
-                                <input type="checkbox" name="month" value="10" id="oct" /><label for="oct">Oct</label>
-                                <input type="checkbox" name="month" value="11" id="nov" /><label for="nov">Nov</label>
-                                <input type="checkbox" name="month" value="12" id="dec" /><label for="dec">Dec</label>
-                        </div>
-                        <div class="section">
-                                <button type="submit" class="button" id="createModel">Create Model</button>
-                        </div>
-                </form>
-                <div class="section">
-                        <!-- Insert graphs below this line -->
-                        {% block graph_container %}
-                        {% endblock %}
-                        <!-- Insert graphs above this line -->
+                <input type="radio" name="graphType" value="pcpAmnt" id="pcpAmnt">
+                <label for="pcpAmnt">Precipitation Amount</label>
+            </div>
+            {% block selection %}
+            {% set graph_types = ['sfcTemp', 'tempElev', 'pcpRate', 'pcpAmnt'] %}
+            {% for graph_type in graph_types %}
+            <div class="{{graph_type}} options">
+                <div class="color-selection">
+                    {% set color_maps = ['jet', 'terrain', 'PuBuGn', 'YlOrRd', 'Greys', 'BrBG', 'bwr', 'Spectral', 'PuOr'] %}
+                    {% set color_name = ['Jet', 'Terrain', 'Purple Blue Green', 'Yellow Orange Red', 'Greys', 'Brown Bluegreen', 'Blue White Red', 'Spectral', 'Purple Orange'] %}
+                    {% for index in range(color_maps|length) %}
+                    {% set color = color_maps[index] %}
+                    {% if index == 0 %}
+                    <input type="radio" name="color-{{graph_type}}" value={{color}} id='color-{{graph_type}}-{{index}}' checked>
+                    {% else %}
+                    <input type="radio" name="color-{{graph_type}}" value={{color}} id='color-{{graph_type}}-{{index}}'>
+                    {% endif %}
+                    <label style="--file: url(color-maps/{{color}}.png);" for='color-{{graph_type}}-{{index}}'>{{color_name[index]}}</label>
+                    {% endfor %}
                 </div>
+                {% if graph_type == 'tempElev' %}
+                <div class="section">
+                    <div>
+                        <input class="elevation" type="range" min="0" max="29" value="15" step="1" name="elevation">
+                        <div class="ticks">
+                            {% for i in range(30) %}
+                            <span class="tick"></span>
+                            {% endfor %}
+                        </div>
+                        <div class="tick-nums">
+                            {% for i in range(30) %}
+                            <span class="tick-num">{{i}}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% endblock %}
+
+            <div class="month-selection">
+                <input type="checkbox" name="month" value="01" id="jan" /><label for="jan">Jan</label>
+                <input type="checkbox" name="month" value="02" id="feb" /><label for="feb">Feb</label>
+                <input type="checkbox" name="month" value="03" id="mar" /><label for="mar">Mar</label>
+                <input type="checkbox" name="month" value="04" id="apr" /><label for="apr">Apr</label>
+                <input type="checkbox" name="month" value="05" id="may" /><label for="may">May</label>
+                <input type="checkbox" name="month" value="06" id="jun" /><label for="jun">Jun</label>
+                <input type="checkbox" name="month" value="07" id="jul" /><label for="jul">Jul</label>
+                <input type="checkbox" name="month" value="08" id="aug" /><label for="aug">Aug</label>
+                <input type="checkbox" name="month" value="09" id="sep" /><label for="sep">Sep</label>
+                <input type="checkbox" name="month" value="10" id="oct" /><label for="oct">Oct</label>
+                <input type="checkbox" name="month" value="11" id="nov" /><label for="nov">Nov</label>
+                <input type="checkbox" name="month" value="12" id="dec" /><label for="dec">Dec</label>
+            </div>
+            <div class="section">
+                <button type="submit" class="button" id="createModel">Create Model</button>
+            </div>
+        </form>
+        <div class="section">
+            <!-- Insert graphs below this line -->
+            {% block graph_container %}
+            {% endblock %}
+            <!-- Insert graphs above this line -->
         </div>
-        <div class="footer">
-                Copyright &copy; 2023 | University of Connecticut - Computational Climate Change Lab
-        </div>
+    </div>
+    <div class="footer">
+        Copyright &copy; 2023 | University of Connecticut - Computational Climate Change Lab
+    </div>
 </body>
 
 </html>
