@@ -62,39 +62,19 @@ html {
     display: none;
 }
 
-.pdf-link {
-    display: flex;
-    flex-direction: column;
-    color: var(--white);
-    justify-content: center;
-    align-items: center;
-}
-
-.pdf-link a {
-    text-decoration: none;
-    color: var(--white);
-    padding: 10px;
-    border: 1px solid white;
-    border-radius: 20px;
-    font-size: 16px;
-    padding: 8px 25px;
-    text-align: center;
-    background: var(--darkBlue);
-    margin: 10px;
-    transition-duration: 0.6s;
-}
-
-.pdf-link a:hover {
-    background: var(--blue);
-    color: var(--white);
-}
-
 .section {
     display: flex;
     margin: auto;
     justify-content: center;
     padding: 10px;
     flex-wrap: wrap;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 100;
 }
 
 .text {
@@ -165,10 +145,11 @@ html {
 /* Selection buttons should be centered within container and wrap if too wide */
 .color-selection,
 .graph-selection,
-.month-selection {
+.month-selection,
+.pdf-link {
     display: flex;
     justify-content: center;
-    padding: 10px;
+    padding-bottom: 10px;
     flex-wrap: wrap;
 }
 
@@ -181,7 +162,9 @@ html {
 
 /* Style the graph and month selection labels */
 .graph-selection label,
-.month-selection label {
+.month-selection label,
+.pdf-link a {
+    text-decoration: none;
     display: inline-block;
     border: 1px solid white;
     border-radius: 20px;
@@ -211,9 +194,10 @@ html {
     text-shadow: 0px 0px 5px black;
 }
 
-/* Style the labels when hovered over by the user */
+/* Style the buttons when hovered over by the user */
 .graph-selection label:hover,
-.month-selection label:hover {
+.month-selection label:hover,
+.pdf-link a:hover {
     background: var(--blue);
     transition-duration: 0.5s;
 }
