@@ -1,6 +1,7 @@
 :root {
     --darkBlue: #192a37;
     --blue: #45637A;
+    --blueOpaque: #45637a40;
     --lightBlue: #a2b0bc;
     --white: #f1f1f1;
     --darkerBlue: #0b1218;
@@ -62,39 +63,23 @@ html {
     display: none;
 }
 
-.pdf-link {
-    display: flex;
-    flex-direction: column;
-    color: var(--white);
-    justify-content: center;
-    align-items: center;
-}
-
-.pdf-link a {
-    text-decoration: none;
-    color: var(--white);
-    padding: 10px;
-    border: 1px solid white;
-    border-radius: 20px;
-    font-size: 16px;
-    padding: 8px 25px;
-    text-align: center;
-    background: var(--darkBlue);
-    margin: 10px;
-    transition-duration: 0.6s;
-}
-
-.pdf-link a:hover {
-    background: var(--blue);
-    color: var(--white);
-}
-
 .section {
     display: flex;
     margin: auto;
     justify-content: center;
     padding: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
     flex-wrap: wrap;
+    background-color: var(--blueOpaque);
+    border-radius: 20px;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 100;
 }
 
 .text {
@@ -163,12 +148,11 @@ html {
 /* *********************** */
 
 /* Selection buttons should be centered within container and wrap if too wide */
-.color-selection,
-.graph-selection,
-.month-selection {
+
+.pdf-link {
     display: flex;
     justify-content: center;
-    padding: 10px;
+    padding-bottom: 10px;
     flex-wrap: wrap;
 }
 
@@ -181,7 +165,9 @@ html {
 
 /* Style the graph and month selection labels */
 .graph-selection label,
-.month-selection label {
+.month-selection label,
+.pdf-link a {
+    text-decoration: none;
     display: inline-block;
     border: 1px solid white;
     border-radius: 20px;
@@ -196,32 +182,31 @@ html {
 /* Style the color selection labels separately - need different background and border for these */
 .color-selection label {
     display: inline-block;
-    border-radius: 20px;
-    font-size: 16px;
-    padding: 8px 18px;
+    border-radius: 2px;
+    height: 32px;
+    width: 8%;
+    min-width: 50px;
     color: var(--white);
     margin: 10px;
     cursor: pointer;
-    border: 2px solid var(--darkBlue);
-    font-weight: 400;
+    border: 3px solid transparent;
     background-image: var(--gradient);
-    background-size: contain;
-    min-width: 110px;
-    text-align: center;
-    text-shadow: 0px 0px 5px black;
+    background-position: -3px;
+    background-size: calc(100% + 6px);
 }
 
-/* Style the labels when hovered over by the user */
+/* Style the buttons when hovered over by the user */
 .graph-selection label:hover,
-.month-selection label:hover {
+.month-selection label:hover,
+.pdf-link a:hover {
     background: var(--blue);
     transition-duration: 0.5s;
 }
 
 .color-selection label:hover {
-    border: 2px solid var(--white);
+    border: 3px solid var(--white);
     transition-duration: 0.5s;
-    box-shadow: inset 0px 0px 20px var(--white);
+    box-shadow: inset 0px 0px 10px var(--white);
 }
 
 /* Style the labels once selected by the user */
@@ -232,9 +217,9 @@ html {
 }
 
 .color-selection input[type="radio"]:checked+label {
-    border: 2px solid var(--white);
+    border: 3px solid var(--white);
     transition-duration: 0.5s;
-    box-shadow: inset 0px 0px 40px var(--white);
+    box-shadow: inset 0px 0px 20px var(--white);
 }
 
 /* ********************** */

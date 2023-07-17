@@ -40,11 +40,11 @@ class Plot:
         max = math.ceil(max)
         min = math.floor(min)
 
-        self.fig = plt.figure(figsize=(9,6))
-        ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=self.central_longitude))
+        projection = ccrs.PlateCarree(central_longitude=self.central_longitude)
+        self.fig, ax = plt.subplots(figsize=(9, 6), subplot_kw=dict(projection=projection))
 
         # add coastlines
-        ax.coastlines(linewidths=0.5)
+        ax.coastlines(resolution='110m',color='black')
 
         ax.set_extent([-180, 180, -90, 90], ccrs.PlateCarree())
 

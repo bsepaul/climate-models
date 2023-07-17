@@ -17,7 +17,7 @@
     <div class="content">
         <div class="title">CLIMATE MODELS</div>
         <form method="POST">
-            <div class="graph-selection">
+            <div class="section graph-selection">
 
                 <input type="radio" name="graphType" value="sfcTemp" id="sfcTemp">
                 <label for="sfcTemp">Surface Temperature</label>
@@ -46,15 +46,16 @@
             ] %}
             {% for graph_type in graph_types %}
             <div class="{{graph_type}} options">
-                <div class="color-selection">
+                <div class="section color-selection">
                     {% for index in range(color_maps|length) %}
                     {% set color = color_maps[index] %}
+                    {# If this is the first color, choice let it be automatically checked #}
                     {% if index == 0 %}
                     <input type="radio" name="color-{{graph_type}}" value={{color.code}} id='color-{{graph_type}}-{{index}}' checked>
                     {% else %}
                     <input type="radio" name="color-{{graph_type}}" value={{color.code}} id='color-{{graph_type}}-{{index}}'>
                     {% endif %}
-                    <label style="--gradient: {{color.gradient}};" for='color-{{graph_type}}-{{index}}'>{{color.name}}</label>
+                    <label class="color-option" style="--gradient: {{color.gradient}};" for='color-{{graph_type}}-{{index}}'></label>
                     {% endfor %}
                 </div>
                 {% if graph_type == 'tempElev' %}
@@ -78,7 +79,7 @@
             {% endfor %}
             {% endblock %}
 
-            <div class="month-selection">
+            <div class="section month-selection">
                 <input type="checkbox" name="month" value="01" id="jan" /><label for="jan">Jan</label>
                 <input type="checkbox" name="month" value="02" id="feb" /><label for="feb">Feb</label>
                 <input type="checkbox" name="month" value="03" id="mar" /><label for="mar">Mar</label>
