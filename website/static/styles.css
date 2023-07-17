@@ -1,6 +1,7 @@
 :root {
     --darkBlue: #192a37;
     --blue: #45637A;
+    --blueOpaque: #45637a40;
     --lightBlue: #a2b0bc;
     --white: #f1f1f1;
     --darkerBlue: #0b1218;
@@ -67,7 +68,11 @@ html {
     margin: auto;
     justify-content: center;
     padding: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
     flex-wrap: wrap;
+    background-color: var(--blueOpaque);
+    border-radius: 20px;
 }
 
 .subtitle {
@@ -143,9 +148,7 @@ html {
 /* *********************** */
 
 /* Selection buttons should be centered within container and wrap if too wide */
-.color-selection,
-.graph-selection,
-.month-selection,
+
 .pdf-link {
     display: flex;
     justify-content: center;
@@ -179,19 +182,17 @@ html {
 /* Style the color selection labels separately - need different background and border for these */
 .color-selection label {
     display: inline-block;
-    border-radius: 20px;
-    font-size: 16px;
-    padding: 8px 18px;
+    border-radius: 2px;
+    height: 32px;
+    width: 8%;
+    min-width: 50px;
     color: var(--white);
     margin: 10px;
     cursor: pointer;
-    border: 2px solid var(--darkBlue);
-    font-weight: 400;
+    border: 3px solid transparent;
     background-image: var(--gradient);
-    background-size: contain;
-    min-width: 110px;
-    text-align: center;
-    text-shadow: 0px 0px 5px black;
+    background-position: -3px;
+    background-size: calc(100% + 6px);
 }
 
 /* Style the buttons when hovered over by the user */
@@ -203,9 +204,9 @@ html {
 }
 
 .color-selection label:hover {
-    border: 2px solid var(--white);
+    border: 3px solid var(--white);
     transition-duration: 0.5s;
-    box-shadow: inset 0px 0px 20px var(--white);
+    box-shadow: inset 0px 0px 10px var(--white);
 }
 
 /* Style the labels once selected by the user */
@@ -216,9 +217,9 @@ html {
 }
 
 .color-selection input[type="radio"]:checked+label {
-    border: 2px solid var(--white);
+    border: 3px solid var(--white);
     transition-duration: 0.5s;
-    box-shadow: inset 0px 0px 40px var(--white);
+    box-shadow: inset 0px 0px 20px var(--white);
 }
 
 /* ********************** */
