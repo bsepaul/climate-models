@@ -11,11 +11,13 @@ import math
 
 class Plot:
 
-    def __init__(self, months, color="viridis", central_longitude=0, title="Plot", label="", file_name="plot.pdf"):
+    def __init__(self, months, time_periods, color="viridis", absv_diff="absv", central_longitude=0, title="Plot", label="", file_name="plot.pdf"):
 
         # Set the passed in variables
         self.months            = months            # months is an array of the months that the user wants to be averaged for their plot
+        self.time_periods      = time_periods      # time_periods is an array of the time_period(s) that the user selected - one time_period means average of that time period, two time_periods means the difference of the average of each time period
         self.color             = color             # color scheme of the plot
+        self.absv_diff         = absv_diff         # absv_diff is a string, either "absv" or "diff" - if the user selects compare time periods, this string will be used - if the string is "absv" take the absolute value of the difference of the two time periods, if the string is "diff" take the difference
         self.central_longitude = central_longitude # longitude that will be at the center of rendered plot
         self.title             = title             # title of the plot
         self.label             = label             # label (units) of the plot

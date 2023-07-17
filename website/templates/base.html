@@ -15,8 +15,59 @@
 
 <body>
     <div class="content">
+
         <div class="title">CLIMATE MODELS</div>
+
+        {% block selection %}
         <form method="POST">
+
+            <!-- GRAPH TYPE SELECTION -->
+            <div class="section">
+                <div class="bubble">
+                    <div class="subtitle">Select Graph Type</div>
+                    <div class="section radio-selection">
+
+                        <input type="radio" name="graphType" value="single" id="single" checked>
+                        <label for="single">Single Time Period</label>
+
+                        <input type="radio" name="graphType" value="compare" id="compare">
+                        <label for="compare">Difference of Time Periods</label>
+
+                    </div>
+                    <div class="diff-type section radio-selection">
+
+                        <input type="radio" name="diffType" value="absv" id="absv" checked>
+                        <label for="absv">Absolute Value</label>
+
+                        <input type="radio" name="diffType" value="diff" id="diff">
+                        <label for="diff">Difference</label>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRAPH TIME PERIOD SELECTION -->
+            <div class="section">
+                <div class="bubble">
+                    <div class="subtitle">Select Time Period</div>
+                    <div class="single-time section radio-selection">
+                        {% set timePeriods = ['4000-4050', '4050-4100', '4100-4150', '4150-4200'] %}
+                        {% for timePeriod in timePeriods %}
+                        <input type="radio" name="singleTimePeriod" value="{{timePeriod}}" id="s-{{timePeriod}}">
+                        <label for="s-{{timePeriod}}">{{timePeriod}}</label>
+                        {% endfor %}
+                    </div>
+                    <div class="compare-time section check-selection">
+                        {% set timePeriods = ['4000-4050', '4050-4100', '4100-4150', '4150-4200'] %}
+                        {% for timePeriod in timePeriods %}
+                        <input type="checkbox" name="compareTimePeriod" value="{{timePeriod}}" id="c-{{timePeriod}}">
+                        <label for="c-{{timePeriod}}">{{timePeriod}}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRAPH VARIABLE SELECTION -->
             <div class="section">
                 <div class="bubble">
                     <div class="subtitle">Select Variable</div>
@@ -36,7 +87,8 @@
                     </div>
                 </div>
             </div>
-            {% block selection %}
+
+            <!-- GRAPH SPECIFIC SELECTIONS (COLOR MAP & ELEVATION) -->
             {% set graph_types = ['sfcTemp', 'tempElev', 'pcpRate', 'pcpAmnt'] %}
             {% set color_maps = [
             {'code': 'jet', 'name': 'Jet', 'gradient': 'linear-gradient(90deg, #000082 0%, #1234F5 15%, #78FBDC 35%, #A5FC82 50%, #F0FE54 65%, #F3AE3D 75%, #EA3B24 85%, #7F170E 100%)'},
@@ -92,7 +144,8 @@
                 {% endif %}
             </div>
             {% endfor %}
-            {% endblock %}
+
+            <!-- GRAPH MONTHS SELECTION -->
             <div class="section">
                 <div class="bubble">
                     <div class="subtitle">Select Months</div>
@@ -112,12 +165,12 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="section">
                 <button type="submit" class="button" id="createModel">Create Model</button>
             </div>
         </form>
+        {% endblock %}
+
         <div class="section">
             <!-- Insert graphs below this line -->
             {% block graph_container %}
