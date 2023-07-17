@@ -16,10 +16,10 @@ def render(html_data):
     data["months"] = html_data.getlist('month')
     if data["months"] == []: return None
     # If user didn't select any plot types, return None
-    data["plots"]  = html_data.getlist('graphType')
+    data["plots"]  = html_data.getlist('graphVariable')
     if data["plots"] == []: return None
     # Color will always be passed due to default value
-    data["color"] = html_data["color-"+html_data['graphType']]
+    data["color"] = html_data["color-"+html_data['graphVariable']]
     # Elevation will always be passed due to default value
     data["elevation"] = int(html_data["elevation"])
 
