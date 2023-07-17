@@ -20,10 +20,10 @@ from plot import Plot
 
 class SurfaceTemperaturePlot(Plot):
 
-    def __init__(self, months, color="viridis", central_longitude=0):
+    def __init__(self, months, time_periods, color="viridis", absv_diff="absv", central_longitude=0):
 
         # Initiate instance of super class: Plot
-        super().__init__(months, color, central_longitude, "Global Surface Temperature", "K", "sfc_temp_plot.pdf")
+        super().__init__(months, time_periods, color, absv_diff, central_longitude, "Global Surface Temperature", "K", "sfc_temp_plot.pdf")
 
 
     def set_data(self):

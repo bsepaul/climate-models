@@ -21,10 +21,10 @@ from plot import Plot
 
 class ElevationTemperature(Plot):
 
-    def __init__(self, months, elevation, color="viridis", central_longitude=0):
+    def __init__(self, months, time_periods, elevation, color="viridis", absv_diff="absv", central_longitude=0):
 
         # Initiate instance of super class: Plot
-        super().__init__(months, color, central_longitude, "Global Elevation Temperature Difference", "K", "temp_elev_plot.pdf")
+        super().__init__(months, time_periods, color, absv_diff, central_longitude, "Global Elevation Temperature Difference", "K", "temp_elev_plot.pdf")
 
         self.elevation = elevation
         self.ds_a = None

@@ -12,14 +12,32 @@ def render(html_data):
     data = {}
 
     # Attempt to extract user's selections from the html data
+
+    # If user didn't select a graph type, return None
+    data["graphType"] = html_data.getlist('graphType')
+    if data["graphType"] == []: return None
+
+    # If the user didn't select either single or compare time periods, return None
+    if data["graphType"][0] == 'compare':
+        data["timePeriods"] = html_data.getlist('compareTimePeriod')
+        data["diffType"] = html_data.getlist('diffType')[0]
+    elif data["graphType"][0] == 'single':
+        data["timePeriods"] = html_data.getlist('singleTimePeriod')
+        data["diffType"] = "absv"
+    else:
+        return None
+
     # If user didn't select any months, return None
     data["months"] = html_data.getlist('month')
     if data["months"] == []: return None
+
     # If user didn't select any plot types, return None
-    data["plots"]  = html_data.getlist('graphType')
+    data["plots"]  = html_data.getlist('graphVariable')
     if data["plots"] == []: return None
+
     # Color will always be passed due to default value
-    data["color"] = html_data["color-"+html_data['graphType']]
+    data["color"] = html_data["color-"+html_data['graphVariable']]
+
     # Elevation will always be passed due to default value
     data["elevation"] = int(html_data["elevation"])
 
@@ -34,19 +52,19 @@ def render(html_data):
 
         if plot == "sfcTemp":
             # Create surface temperature plot
-            testPlot = SurfaceTemperaturePlot(months = data["months"], color = data["color"])
+            testPlot = SurfaceTemperaturePlot(months = data["months"], time_periods = data["timePeriods"], color = data["color"])
 
         elif plot == "tempElev":
             # Create surface temperature plot
-            testPlot = ElevationTemperature(months = data["months"], color = data["color"], elevation=data["elevation"])
+            testPlot = ElevationTemperature(months = data["months"], time_periods = data["timePeriods"], color = data["color"], elevation=data["elevation"])
 
         elif plot == "pcpRate":
             # Create precipitation rate plot
-            testPlot = PrecipitationRatePlot(months= data["months"], color = data["color"])
+            testPlot = PrecipitationRatePlot(months= data["months"], time_periods = data["timePeriods"], color = data["color"])
         
         elif plot == "pcpAmnt":
             # Create precipitation amount plot
-            testPlot = PrecipitationAmountPlot(months= data["months"], color = data["color"])
+            testPlot = PrecipitationAmountPlot(months= data["months"], time_periods = data["timePeriods"], color = data["color"])
 
         # Set the data, make the figure, and create the pdf
         testPlot.create_plot()
