@@ -17,19 +17,24 @@
     <div class="content">
         <div class="title">CLIMATE MODELS</div>
         <form method="POST">
-            <div class="section graph-selection">
+            <div class="section">
+                <div class="bubble">
+                    <div class="subtitle">Select Variable</div>
+                    <div class="section radio-selection">
 
-                <input type="radio" name="graphType" value="sfcTemp" id="sfcTemp">
-                <label for="sfcTemp">Surface Temperature</label>
+                        <input type="radio" name="graphType" value="sfcTemp" id="sfcTemp">
+                        <label for="sfcTemp">Surface Temperature</label>
 
-                <input type="radio" name="graphType" value="tempElev" id="tempElev">
-                <label for="tempElev">Elevation Temperature</label>
+                        <input type="radio" name="graphType" value="tempElev" id="tempElev">
+                        <label for="tempElev">Elevation Temperature</label>
 
-                <input type="radio" name="graphType" value="pcpRate" id="pcpRate">
-                <label for="pcpRate">Precipitation Rate</label>
+                        <input type="radio" name="graphType" value="pcpRate" id="pcpRate">
+                        <label for="pcpRate">Precipitation Rate</label>
 
-                <input type="radio" name="graphType" value="pcpAmnt" id="pcpAmnt">
-                <label for="pcpAmnt">Precipitation Amount</label>
+                        <input type="radio" name="graphType" value="pcpAmnt" id="pcpAmnt">
+                        <label for="pcpAmnt">Precipitation Amount</label>
+                    </div>
+                </div>
             </div>
             {% block selection %}
             {% set graph_types = ['sfcTemp', 'tempElev', 'pcpRate', 'pcpAmnt'] %}
@@ -46,31 +51,41 @@
             ] %}
             {% for graph_type in graph_types %}
             <div class="{{graph_type}} options">
-                <div class="section color-selection">
-                    {% for index in range(color_maps|length) %}
-                    {% set color = color_maps[index] %}
-                    {# If this is the first color, choice let it be automatically checked #}
-                    {% if index == 0 %}
-                    <input type="radio" name="color-{{graph_type}}" value={{color.code}} id='color-{{graph_type}}-{{index}}' checked>
-                    {% else %}
-                    <input type="radio" name="color-{{graph_type}}" value={{color.code}} id='color-{{graph_type}}-{{index}}'>
-                    {% endif %}
-                    <label class="color-option" style="--gradient: {{color.gradient}};" for='color-{{graph_type}}-{{index}}'></label>
-                    {% endfor %}
+                <div class="section">
+                    <div class="bubble">
+                        <div class="subtitle">Select Color</div>
+                        <div class="section color-selection">
+                            {% for index in range(color_maps|length) %}
+                            {% set color = color_maps[index] %}
+                            {# If this is the first color, choice let it be automatically checked #}
+                            {% if index == 0 %}
+                            <input type="radio" name="color-{{graph_type}}" value={{color.code}} id='color-{{graph_type}}-{{index}}' checked>
+                            {% else %}
+                            <input type="radio" name="color-{{graph_type}}" value={{color.code}} id='color-{{graph_type}}-{{index}}'>
+                            {% endif %}
+                            <label class="color-option" style="--gradient: {{color.gradient}};" for='color-{{graph_type}}-{{index}}'></label>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
                 {% if graph_type == 'tempElev' %}
                 <div class="section">
-                    <div class="center-vertical" style="width: 600px">
-                        <input type="range" min="0" max="29" value="15" step="1" name="elevation">
-                        <div class="ticks">
-                            {% for i in range(30) %}
-                            <span class="tick"></span>
-                            {% endfor %}
-                        </div>
-                        <div class="tick-nums">
-                            {% for i in range(30) %}
-                            <span class="tick-num">{{i}}</span>
-                            {% endfor %}
+                    <div class="bubble">
+                        <div class="subtitle">Select Elevation</div>
+                        <div class="section">
+                            <div class="center-vertical elevation-range">
+                                <input type="range" min="0" max="29" value="15" step="1" name="elevation">
+                                <div class="ticks">
+                                    {% for i in range(30) %}
+                                    <span class="tick"></span>
+                                    {% endfor %}
+                                </div>
+                                <div class="tick-nums">
+                                    {% for i in range(30) %}
+                                    <span class="tick-num">{{i}}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,21 +93,27 @@
             </div>
             {% endfor %}
             {% endblock %}
-
-            <div class="section month-selection">
-                <input type="checkbox" name="month" value="01" id="jan" /><label for="jan">Jan</label>
-                <input type="checkbox" name="month" value="02" id="feb" /><label for="feb">Feb</label>
-                <input type="checkbox" name="month" value="03" id="mar" /><label for="mar">Mar</label>
-                <input type="checkbox" name="month" value="04" id="apr" /><label for="apr">Apr</label>
-                <input type="checkbox" name="month" value="05" id="may" /><label for="may">May</label>
-                <input type="checkbox" name="month" value="06" id="jun" /><label for="jun">Jun</label>
-                <input type="checkbox" name="month" value="07" id="jul" /><label for="jul">Jul</label>
-                <input type="checkbox" name="month" value="08" id="aug" /><label for="aug">Aug</label>
-                <input type="checkbox" name="month" value="09" id="sep" /><label for="sep">Sep</label>
-                <input type="checkbox" name="month" value="10" id="oct" /><label for="oct">Oct</label>
-                <input type="checkbox" name="month" value="11" id="nov" /><label for="nov">Nov</label>
-                <input type="checkbox" name="month" value="12" id="dec" /><label for="dec">Dec</label>
+            <div class="section">
+                <div class="bubble">
+                    <div class="subtitle">Select Months</div>
+                    <div class="section check-selection">
+                        <input type="checkbox" name="month" value="01" id="jan" /><label for="jan">Jan</label>
+                        <input type="checkbox" name="month" value="02" id="feb" /><label for="feb">Feb</label>
+                        <input type="checkbox" name="month" value="03" id="mar" /><label for="mar">Mar</label>
+                        <input type="checkbox" name="month" value="04" id="apr" /><label for="apr">Apr</label>
+                        <input type="checkbox" name="month" value="05" id="may" /><label for="may">May</label>
+                        <input type="checkbox" name="month" value="06" id="jun" /><label for="jun">Jun</label>
+                        <input type="checkbox" name="month" value="07" id="jul" /><label for="jul">Jul</label>
+                        <input type="checkbox" name="month" value="08" id="aug" /><label for="aug">Aug</label>
+                        <input type="checkbox" name="month" value="09" id="sep" /><label for="sep">Sep</label>
+                        <input type="checkbox" name="month" value="10" id="oct" /><label for="oct">Oct</label>
+                        <input type="checkbox" name="month" value="11" id="nov" /><label for="nov">Nov</label>
+                        <input type="checkbox" name="month" value="12" id="dec" /><label for="dec">Dec</label>
+                    </div>
+                </div>
             </div>
+
+
             <div class="section">
                 <button type="submit" class="button" id="createModel">Create Model</button>
             </div>

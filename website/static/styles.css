@@ -20,6 +20,21 @@ html {
     height: 100%;
 }
 
+.bubble {
+    justify-content: center;
+    padding: 20px 30px 30px 30px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    width: fit-content;
+    border-radius: 40px;
+    transition: 0.8s;
+}
+
+.bubble:hover {
+    transition-duration: .8s;
+    background-color: var(--blueOpaque);
+}
+
 .center-vertical {
     display: flex;
     flex-direction: column;
@@ -34,6 +49,11 @@ html {
     margin: auto;
     font-family: Helvetica, sans-serif;
     font-weight: 100;
+}
+
+.elevation-range {
+    width: 600px;
+    margin: 0px 15px 0px 15px;
 }
 
 .footer {
@@ -67,19 +87,19 @@ html {
     display: flex;
     margin: auto;
     justify-content: center;
-    padding: 10px;
-    margin-bottom: 20px;
-    margin-top: 20px;
     flex-wrap: wrap;
-    background-color: var(--blueOpaque);
-    border-radius: 20px;
 }
+
+/* *************************** */
+/* CREATE TEXT STYLING */
+/* *************************** */
 
 .subtitle {
     text-align: center;
     color: var(--white);
-    font-size: 20px;
-    font-weight: 100;
+    font-size: 18px;
+    font-weight: 300;
+    margin-bottom: 10px;
 }
 
 .text {
@@ -156,16 +176,23 @@ html {
     flex-wrap: wrap;
 }
 
+.color-selection,
+.radio-selection,
+.check-selection {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 /* Remove display of default radio buttons and checkboxes */
 .color-selection input[type="radio"],
-.graph-selection input[type="radio"],
-.month-selection input[type="checkbox"] {
+.radio-selection input[type="radio"],
+.check-selection input[type="checkbox"] {
     display: none;
 }
 
 /* Style the graph and month selection labels */
-.graph-selection label,
-.month-selection label,
+.radio-selection label,
+.check-selection label,
 .pdf-link a {
     text-decoration: none;
     display: inline-block;
@@ -184,8 +211,7 @@ html {
     display: inline-block;
     border-radius: 2px;
     height: 32px;
-    width: 8%;
-    min-width: 50px;
+    width: 80px;
     color: var(--white);
     margin: 10px;
     cursor: pointer;
@@ -196,8 +222,8 @@ html {
 }
 
 /* Style the buttons when hovered over by the user */
-.graph-selection label:hover,
-.month-selection label:hover,
+.radio-selection label:hover,
+.check-selection label:hover,
 .pdf-link a:hover {
     background: var(--blue);
     transition-duration: 0.5s;
@@ -210,8 +236,8 @@ html {
 }
 
 /* Style the labels once selected by the user */
-.graph-selection input[type="radio"]:checked+label,
-.month-selection input[type="checkbox"]:checked+label {
+.radio-selection input[type="radio"]:checked+label,
+.check-selection input[type="checkbox"]:checked+label {
     background: var(--white) !important;
     color: var(--darkBlue) !important;
 }
