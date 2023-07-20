@@ -6,7 +6,8 @@ import mpld3
 
 # render the graphs into html strings
 def render(html_data):
-    print(html_data)
+
+    print(f"\nhtml data:\n{html_data}\n")
 
     # create an empty dictionary to store values selected by the user in the html form
     data = {}
@@ -44,7 +45,7 @@ def render(html_data):
     # Empty list to store html strings of interactive and pdf forms for each graph requested
     graphs = []
     pdfs = []
-    print(data)
+    print(f"\nparsed data:\n{data}\n")
 
     # Iterate through plot types requested and make graph for each plot
     for plot in  data["plots"]:
