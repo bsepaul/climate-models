@@ -51,7 +51,7 @@
                 <div class="bubble">
                     <div class="subtitle">Select Time Period</div>
                     <div class="single-time section radio-selection">
-                        {% set timePeriods = ['4000-4050', '4050-4100', '4100-4150', '4150-4200'] %}
+                        {% set timePeriods = ['4000-4010', '4010-4020', '4020-4030', '4030-4040', '4040-4050'] %}
                         {% for timePeriod in timePeriods %}
                         <input type="radio" name="singleTimePeriod" value="{{timePeriod}}" id="s-{{timePeriod}}">
                         <label for="s-{{timePeriod}}">{{timePeriod}}</label>
@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="tick-nums">
                                     {% for i in range(30) %}
-                                    <span class="tick-num">{{i}}</span>
+                                    <span class="tick-num">{{i+1}}</span>
                                     {% endfor %}
                                 </div>
                             </div>
