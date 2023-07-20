@@ -50,17 +50,18 @@
             <div class="section">
                 <div class="bubble">
                     <div class="subtitle">Select Time Period</div>
+                    {% set timePeriods = ['4000-4010', '4010-4020', '4020-4030', '4030-4040', '4040-4050'] %}
                     <div class="single-time section radio-selection">
-                        {% set timePeriods = ['4000-4010', '4010-4020', '4020-4030', '4030-4040', '4040-4050'] %}
-                        {% for timePeriod in timePeriods %}
-                        <input type="radio" name="singleTimePeriod" value="{{timePeriod}}" id="s-{{timePeriod}}">
+                        {% for i in range(timePeriods | length) %}
+                        {% set timePeriod = timePeriods[i] %}
+                        <input type="radio" name="singleTimePeriod" value="{{i}}" id="s-{{timePeriod}}">
                         <label for="s-{{timePeriod}}">{{timePeriod}}</label>
                         {% endfor %}
                     </div>
                     <div class="compare-time section check-selection">
-                        {% set timePeriods = ['4000-4050', '4050-4100', '4100-4150', '4150-4200'] %}
-                        {% for timePeriod in timePeriods %}
-                        <input type="checkbox" name="compareTimePeriod" value="{{timePeriod}}" id="c-{{timePeriod}}">
+                        {% for i in range(timePeriods | length) %}
+                        {% set timePeriod = timePeriods[i] %}
+                        <input type="checkbox" name="compareTimePeriod" value="{{i}}" id="c-{{timePeriod}}">
                         <label for="c-{{timePeriod}}">{{timePeriod}}</label>
                         {% endfor %}
                     </div>
@@ -150,18 +151,13 @@
                 <div class="bubble">
                     <div class="subtitle">Select Months</div>
                     <div class="section check-selection">
-                        <input type="checkbox" name="month" value="01" id="jan" /><label for="jan">Jan</label>
-                        <input type="checkbox" name="month" value="02" id="feb" /><label for="feb">Feb</label>
-                        <input type="checkbox" name="month" value="03" id="mar" /><label for="mar">Mar</label>
-                        <input type="checkbox" name="month" value="04" id="apr" /><label for="apr">Apr</label>
-                        <input type="checkbox" name="month" value="05" id="may" /><label for="may">May</label>
-                        <input type="checkbox" name="month" value="06" id="jun" /><label for="jun">Jun</label>
-                        <input type="checkbox" name="month" value="07" id="jul" /><label for="jul">Jul</label>
-                        <input type="checkbox" name="month" value="08" id="aug" /><label for="aug">Aug</label>
-                        <input type="checkbox" name="month" value="09" id="sep" /><label for="sep">Sep</label>
-                        <input type="checkbox" name="month" value="10" id="oct" /><label for="oct">Oct</label>
-                        <input type="checkbox" name="month" value="11" id="nov" /><label for="nov">Nov</label>
-                        <input type="checkbox" name="month" value="12" id="dec" /><label for="dec">Dec</label>
+                        {% set months = [
+                        {'name':'Jan', 'val':'01'}, {'name':'Feb', 'val':'02'}, {'name':'Mar', 'val':'03'}, {'name':'Apr', 'val':'04'},
+                        {'name':'May', 'val':'05'}, {'name':'Jun', 'val':'06'}, {'name':'Jul', 'val':'07'}, {'name':'Aug', 'val':'08'},
+                        {'name':'Sep', 'val':'09'}, {'name':'Oct', 'val':'10'}, {'name':'Nov', 'val':'11'}, {'name':'Dec', 'val':'12'}] %}
+                        {% for month in months %}
+                        <input type="checkbox" name="month" value="{{month['val']}}" id="{{month['name']}}" /><label for="{{month['name']}}">{{month['name']}}</label>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
