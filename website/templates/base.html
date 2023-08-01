@@ -81,7 +81,6 @@
             </div>
 
             <!-- GRAPH SPECIFIC SELECTIONS (COLOR MAP & ELEVATION) -->
-            {% set graph_types = ['sfcTemp', 'tempElev', 'pcpRate', 'pcpAmnt'] %}
             {% set color_maps = [
             {'code': 'jet', 'name': 'Jet', 'gradient': 'linear-gradient(90deg, #000082 0%, #1234F5 15%, #78FBDC 35%, #A5FC82 50%, #F0FE54 65%, #F3AE3D 75%, #EA3B24 85%, #7F170E 100%)'},
             {'code': 'terrain', 'name': 'Terrain', 'gradient': 'linear-gradient(90deg, #333393 0%, #4396F6 15%, #5DCA72 25%, #A5FC82 40%, #FEFDA5 50%, #C0B480 60%, #7B5D56 75%, #BCAEAA 85%, #FDFCFC 100%)'},
@@ -93,26 +92,25 @@
             {'code': 'Spectral', 'name': 'Spectral', 'gradient': 'linear-gradient(90deg, #911C43 0%, #C64C52 10%, #E9905D 25%, #F6D088 35%, #FEFEC4 50%, #E3F1A3 60%, #ADD7A9 70%, #87C5A6 80%, #5794B3 90%, #5A519E 100%)'},
             {'code': 'PuOr', 'name': 'Orange Purple', 'gradient': 'linear-gradient(90deg, #763F18 0%, #AD6225 10%, #E19F4E 25%, #F6D5A2 35%, #F7F5F3 50%, #D2D2E5 60%, #AEA7CC 70%, #837AAC 80%, #5B3F8D 85%, #290449 100%)'}
             ] %}
-            {% for graph_type in graph_types %}
-            <div class="{{graph_type}} options">
-                <div class="section">
-                    <div class="bubble">
-                        <div class="subtitle">Select Color</div>
-                        <div class="section color-selection">
-                            {% for index in range(color_maps|length) %}
-                            {% set color = color_maps[index] %}
-                            {# If this is the first color, choice let it be automatically checked #}
-                            {% if index == 0 %}
-                            <input type="radio" name="color-{{graph_type}}" value={{color.code}} id='color-{{graph_type}}-{{index}}' checked>
-                            {% else %}
-                            <input type="radio" name="color-{{graph_type}}" value={{color.code}} id='color-{{graph_type}}-{{index}}'>
-                            {% endif %}
-                            <label class="color-option" style="--gradient: {{color.gradient}};" for='color-{{graph_type}}-{{index}}'></label>
-                            {% endfor %}
-                        </div>
+            <div class="section">
+                <div class="bubble">
+                    <div class="subtitle">Select Color</div>
+                    <div class="section color-selection">
+                        {% for index in range(color_maps|length) %}
+                        {% set color = color_maps[index] %}
+                        {# If this is the first color, choice let it be automatically checked #}
+                        {% if index == 0 %}
+                        <input type="radio" name="color" value={{color.code}} id='color-{{index}}' checked>
+                        {% else %}
+                        <input type="radio" name="color" value={{color.code}} id='color-{{index}}'>
+                        {% endif %}
+                        <label class="color-option" style="--gradient: {{color.gradient}};" for='color-{{index}}'></label>
+                        {% endfor %}
                     </div>
                 </div>
-                {% if graph_type == 'tempElev' %}
+            </div>
+
+            <div class="tempElev options">
                 <div class="section">
                     <div class="bubble">
                         <div class="subtitle">Select Elevation</div>
@@ -133,9 +131,7 @@
                         </div>
                     </div>
                 </div>
-                {% endif %}
             </div>
-            {% endfor %}
 
             <!-- GRAPH MONTHS SELECTION -->
             <div class="section">

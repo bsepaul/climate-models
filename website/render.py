@@ -35,7 +35,7 @@ def render(html_data):
     if data["plots"] == []: return None
 
     # Color will always be passed due to default value
-    data["color"] = html_data["color-"+html_data['graphVariable']]
+    data["color"] = html_data["color"]
 
     # Elevation will always be passed due to default value
     data["elevation"] = int(html_data["elevation"])
