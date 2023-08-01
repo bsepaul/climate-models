@@ -11,13 +11,12 @@ import math
 
 class Plot:
 
-    def __init__(self, months, time_periods, color="viridis", absv_diff="absv", central_longitude=0, title="Plot", label="", file_name="plot.pdf"):
+    def __init__(self, months, time_periods, color="viridis", central_longitude=0, title="Plot", label="", file_name="plot.pdf"):
 
         # Set the passed in variables
         self.months            = months            # months is an array of the months that the user wants to be averaged for their plot
         self.time_periods      = time_periods      # time_periods is an array of the time_period(s) that the user selected - one time_period means average of that time period, two time_periods means the difference of the average of each time period
         self.color             = color             # color scheme of the plot
-        self.absv_diff         = absv_diff         # absv_diff is a string, either "absv" or "diff" - if the user selects compare time periods, this string will be used - if the string is "absv" take the absolute value of the difference of the two time periods, if the string is "diff" take the difference
         self.central_longitude = central_longitude # longitude that will be at the center of rendered plot
         self.title             = title             # title of the plot
         self.label             = label             # label (units) of the plot
@@ -28,14 +27,24 @@ class Plot:
 
         self.fig  = None    # fig will store the rendered graphical figure
         self.pdf  = None    # pdf will store the rendered pdf of the figure
+        self.time_period_length = 10
 
     def set_data(self):
-        pass
+
+        if len(self.time_periods) <= 0:
+            print("User needs to enter at least one time period to collect data for")
+            exit()
+        else:
+            self.time_period_a = int(self.time_periods[0])
+            self.data = self.get_time_period_data(self.time_period_a)
+            if len(self.time_periods) == 2:
+                self.data -= self.get_time_period_data(self.time_period_b)
+                print(self.data)
 
     def make_fig(self):
 
-        max = min = self.data.values[0][0][0]
-        for values in self.data.values[0]:
+        max = min = self.data.values[0][0]
+        for values in self.data.values:
             for value in values:
                 if value > max: max = value
                 elif value < min: min = value
@@ -57,8 +66,7 @@ class Plot:
                                      xticks=np.linspace(-180, 180, 13),
                                      yticks=np.linspace(-90, 90, 7))
 
-        # plot the first time slice
-        plot = self.data[0, :, :].plot.contourf(ax=ax,
+        plot = self.data[:, :].plot.contourf(ax=ax,
                                         transform=ccrs.PlateCarree(),
                                         vmin=min,
                                         vmax = max,

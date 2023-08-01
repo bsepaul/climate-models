@@ -17,43 +17,45 @@ from plot import Plot
 #     long_name: Total (vertically integrated) precipitable water
 #     cell_methods: time: mean
 # unlimited dimensions: time
-# current shape = (12, 96, 144)
+# current shape = (612, 96, 144)
 
 class PrecipitationAmountPlot(Plot):
 
-    def __init__(self, months, time_periods, color="viridis", absv_diff="absv", central_longitude=0):
+    def __init__(self, months, time_periods, color="viridis", central_longitude=0):
 
         # Initiate instance of super class: Plot
-        super().__init__(months, time_periods, color, absv_diff, central_longitude, "Precipitation Amount", "kg/m2", "precip_amnt_plot.pdf")
+        super().__init__(months, time_periods, color, central_longitude, "Precipitation Amount", "kg/m2", "precip_amnt_plot.pdf")
 
-
-    def set_data(self):
-
-        # get the data from the first month in the list of months
-        file = f"netcdf_files_full/b.e12.B1850.T31_g37.1x.cam.h0.3000-{self.months[0]}.nc"
-        self.ds = xr.open_dataset(file, decode_times=False)
-        print(f"collecting data from file: {file}")
+    def get_time_period_data(self, time_period):
 
         try:
-            # Go through each month's file and sum  precipitation values, TMQ
-            for month in self.months[1:]:
-                file = f"netcdf_files_full/b.e12.B1850.T31_g37.1x.cam.h0.3000-{month}.nc"
-                print(f"collecting data from file: {file}")
-                next_ds = xr.open_dataset(file, decode_times=False)
-                self.ds.TMQ.values += next_ds.TMQ.values
 
-            # Average the values by dividing the values by the number of months
-            self.data = self.ds.TMQ
+            file = "netcdf_files_full/test_data_4000-4050.nc"
+            self.ds = xr.open_dataset(file, decode_times=False)
 
-        # AttributeError: attribute TMQ was not found in the file
+            start = (time_period * self.time_period_length * 12)
+            end = start + ((self.time_period_length + 1) * 12)
+
+            total_data = self.ds.TMQ[start : end]
+            print(total_data)
+            averaged_data = total_data[0]
+
+
+            for i in range(1, len(total_data)):
+                averaged_data += total_data[i]
+
+            self.ds.close()
+
+            averaged_data = averaged_data / len(total_data)
+
+            return averaged_data
+
+        # AttributeError: attribute T was not found in the file
         except AttributeError:
-            print("Dataset is missing \'TMQ\' attribute")
+            print("Dataset is missing \'PRECC\' or \'PRECL\' attribute")
             exit()
-        
+
         # Another error occurred while accessing the data
         except:
-            print(f"Something went wrong while accessing the data file: {file}")
+            print("Something went wrong while accessing the data file")
             exit()
-
-        # Average the values by dividing the values by the number of months
-        self.data.values = (self.data.values) / len(self.months)

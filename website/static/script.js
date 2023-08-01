@@ -2,7 +2,6 @@ $(document).ready(function () {
 
     // By default, single time is selected so on load hide compare time selection and make sure single time selection is shown
     $(".compare-time").hide();
-    $(".diff-type").hide();
     $(".single-time").show();
 
     // If user selects either compare-time or single-time, show the correct timeline selections based on selection
@@ -11,11 +10,9 @@ $(document).ready(function () {
         if (type == 'compare') {
             $(".single-time").hide();
             $(".compare-time").show();
-            $(".diff-type").show();
         } else {
             $(".compare-time").hide();
             $(".single-time").show();
-            $(".diff-type").hide();
         }
     })
 

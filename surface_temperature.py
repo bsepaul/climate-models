@@ -16,35 +16,51 @@ from plot import Plot
 #     long_name: Surface temperature (radiative)
 #     cell_methods: time: mean
 # unlimited dimensions: time
-# current shape = (12, 96, 144)
+# current shape = (612, 96, 144)
 
 class SurfaceTemperaturePlot(Plot):
 
-    def __init__(self, months, time_periods, color="viridis", absv_diff="absv", central_longitude=0):
+    def __init__(self, months, time_periods, color="viridis", central_longitude=0):
 
         # Initiate instance of super class: Plot
-        super().__init__(months, time_periods, color, absv_diff, central_longitude, "Global Surface Temperature", "K", "sfc_temp_plot.pdf")
+        super().__init__(months, time_periods, color, central_longitude, "Global Surface Temperature", "K", "sfc_temp_plot.pdf")
 
+    def get_time_period_data(self, time_period):
 
-    def set_data(self):
-
-        # get the data from the first month in the list of months
-        file = f"netcdf_files_full/b.e12.B1850.T31_g37.1x.cam.h0.3000-{self.months[0]}.nc"
-        self.ds = xr.open_dataset(file, decode_times=False)
-        print(f"collecting data from file: {file}")
+        # Time period indexing is going to start at intervals 0, 120, 240, 360, 480
+        # Each interval will cover 11 years, even though the time period length is 10
+        # Indexing lengths will be 132 since each index represents one month, we have 11 * 12 = 132 for 11 years of data
+        # Intervals for a 51 year file split into 5 time periods:
+        # 0   - 132
+        # 120 - 252
+        # 240 - 372
+        # 360 - 492
+        # 480 - 612
+        # The intervals will overlap by one year while averaging, but they are all equal in length (132 = 11 * 12 -> 11 years of data)
         
         try:
-            # Go through each month's file and sum  precipitation values, TMQ
-            for month in self.months[1:]:
-                file = f"netcdf_files_full/b.e12.B1850.T31_g37.1x.cam.h0.3000-{month}.nc"
-                print(f"collecting data from file: {file}")
-                next_ds = xr.open_dataset(file, decode_times=False)
-                self.ds.TS.values += next_ds.TS.values
+            
+            file = "netcdf_files_full/test_data_4000-4050.nc"
+            self.ds = xr.open_dataset(file, decode_times=False)
 
-            self.data = self.ds.TS
+            start = (time_period * self.time_period_length * 12)
+            end = start + ((self.time_period_length + 1) * 12)
+
+            total_data = self.ds.TS[start : end]
+
+            averaged_data = total_data[0]
+
+
+            for i in range(1, len(total_data)):
+                averaged_data += total_data[i]
+
             self.ds.close()
 
-        # AttributeError: attribute TS was not found in the file
+            averaged_data = averaged_data / len(total_data)
+
+            return averaged_data
+
+        # AttributeError: attribute T was not found in the file
         except AttributeError:
             print("Dataset is missing \'TS\' attribute")
             exit()
@@ -54,5 +70,7 @@ class SurfaceTemperaturePlot(Plot):
             print("Something went wrong while accessing the data file")
             exit()
 
-        # Average the values by dividing the values by the number of months
-        self.data.values = (self.data.values) / len(self.months)
+
+if __name__=='__main__':
+    testPlot = SurfaceTemperaturePlot(months=['01', '04', '07'], time_periods=['0', '4'])
+    testPlot.set_data()
