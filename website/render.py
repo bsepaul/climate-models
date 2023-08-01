@@ -21,10 +21,8 @@ def render(html_data):
     # If the user didn't select either single or compare time periods, return None
     if data["graphType"][0] == 'compare':
         data["timePeriods"] = html_data.getlist('compareTimePeriod')
-        data["diffType"] = html_data.getlist('diffType')[0]
     elif data["graphType"][0] == 'single':
         data["timePeriods"] = html_data.getlist('singleTimePeriod')
-        data["diffType"] = "absv"
     else:
         return None
 

@@ -17,57 +17,40 @@ from plot import Plot
 #     long_name: Temperature
 #     cell_methods: time: mean
 # unlimited dimensions: time
-# current shape = (12, 30, 96, 144)
+# current shape = (612, 30, 96, 144)
 
 class ElevationTemperature(Plot):
 
-    def __init__(self, months, time_periods, elevation, color="viridis", absv_diff="absv", central_longitude=0):
+    def __init__(self, months, time_periods, elevation, color="viridis", central_longitude=0):
 
         # Initiate instance of super class: Plot
-        super().__init__(months, time_periods, color, absv_diff, central_longitude, "Global Elevation Temperature Difference", "K", "temp_elev_plot.pdf")
+        super().__init__(months, time_periods, color, central_longitude, "Global Elevation Temperature Difference", "K", "temp_elev_plot.pdf")
 
         self.elevation = elevation
-        self.ds_a = None
-        self.ds_b = None
 
-        # The files contain all 12 months' data so we are indexing the data differently
-        # Subtracting 1 because month "04" is April, which is indexed by 3
-        self.months = [(int(month)-1) for month in self.months]
-
-    def set_data(self):
+    def get_time_period_data(self, time_period):
 
         try:
 
-            # define two files needed to compare data
-            file_a = 'netcdf_files_full/b.ie12.B1850.f19_g16.PMIP4-pliomip2.ecc_0.013216480.obliq_22.41968.CO2_283.9966.cam.h0.0500.nc'
-            file_b = 'netcdf_files_full/b.ie12.B1850.f19_g16.PMIP4-pliomip2.ecc_0.018253007.obliq_23.23545.CO2_556.8582.cam.h0.0500.nc'
+            file = "netcdf_files_full/test_data_4000-4050.nc"
+            self.ds = xr.open_dataset(file, decode_times=False)
 
-            # get data for both files
-            self.ds_a = xr.open_dataset(file_a, decode_times=False)
-            self.ds_b = xr.open_dataset(file_b, decode_times=False)
+            start = (time_period * self.time_period_length * 12)
+            end = start + ((self.time_period_length + 1) * 12)
 
-            # extract values for the elevation selected by the user
-            data_a = self.ds_a.T[:, self.elevation]
-            data_b = self.ds_b.T[:, self.elevation]
+            total_data = self.ds.T[start : end, self.elevation]
 
-            # get first month
-            first_month = self.months[0]
+            averaged_data = total_data[0]
 
-            # sum together values for all selected months
-            for month in self.months[1:]:
-                data_a.values[first_month] += data_a.values[month]
-                data_b.values[first_month] += data_b.values[month]
 
-            # get the average by dividing by the length of month list
-            data_a.values[0] = data_a.values[first_month] / len(self.months)
-            data_b.values[0] = data_b.values[first_month] / len(self.months)
+            for i in range(1, len(total_data)):
+                averaged_data += total_data[i]
 
-            # store the difference of the data sets in self.data to be used for plotting
-            self.data = data_a - data_b
+            self.ds.close()
 
-            # close datasets
-            self.ds_a.close()
-            self.ds_b.close()
+            averaged_data = averaged_data / len(total_data)
+
+            return averaged_data
 
         # AttributeError: attribute T was not found in the file
         except AttributeError:
