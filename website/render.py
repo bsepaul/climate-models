@@ -1,7 +1,7 @@
-from surface_temperature import SurfaceTemperaturePlot
+from temperature_surface import TemperatureSurfacePlot
+from temperature_elevation import TemperatureElevation
 from precipitation_amount import PrecipitationAmountPlot
 from precipitation_rate import PrecipitationRatePlot
-from temperature_elevation import ElevationTemperature
 import mpld3
 
 # render the graphs into html strings
@@ -49,13 +49,13 @@ def render(html_data):
     for plot in  data["plots"]:
         print(f"User is requesting a {plot} plot for the months: {data['months']}")
 
-        if plot == "sfcTemp":
+        if plot == "tempSfc":
             # Create surface temperature plot
-            testPlot = SurfaceTemperaturePlot(months = data["months"], time_periods = data["timePeriods"], color = data["color"])
+            testPlot = TemperatureSurfacePlot(months = data["months"], time_periods = data["timePeriods"], color = data["color"])
 
         elif plot == "tempElev":
-            # Create surface temperature plot
-            testPlot = ElevationTemperature(months = data["months"], time_periods = data["timePeriods"], color = data["color"], elevation=data["elevation"])
+            # Create elevation temperature plot
+            testPlot = TemperatureElevation(months = data["months"], time_periods = data["timePeriods"], color = data["color"], elevation=data["elevation"])
 
         elif plot == "pcpRate":
             # Create precipitation rate plot

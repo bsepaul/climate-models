@@ -46,7 +46,6 @@ class PrecipitationRatePlot(Plot):
             end = start + ((self.time_period_length + 1) * 12)
 
             total_data = self.ds.PRECC[start : end] + self.ds.PRECL[start : end]
-            print(total_data)
             averaged_data = total_data[0]
 
 

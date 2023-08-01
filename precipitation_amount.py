@@ -37,7 +37,6 @@ class PrecipitationAmountPlot(Plot):
             end = start + ((self.time_period_length + 1) * 12)
 
             total_data = self.ds.TMQ[start : end]
-            print(total_data)
             averaged_data = total_data[0]
 
 

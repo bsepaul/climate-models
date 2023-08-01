@@ -18,7 +18,7 @@ from plot import Plot
 # unlimited dimensions: time
 # current shape = (612, 96, 144)
 
-class SurfaceTemperaturePlot(Plot):
+class TemperatureSurfacePlot(Plot):
 
     def __init__(self, months, time_periods, color="viridis", central_longitude=0):
 
@@ -72,5 +72,5 @@ class SurfaceTemperaturePlot(Plot):
 
 
 if __name__=='__main__':
-    testPlot = SurfaceTemperaturePlot(months=['01', '04', '07'], time_periods=['0', '4'])
+    testPlot = TemperatureSurfacePlot(months=['01', '04', '07'], time_periods=['0', '4'])
     testPlot.set_data()

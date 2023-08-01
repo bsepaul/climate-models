@@ -19,7 +19,7 @@ from plot import Plot
 # unlimited dimensions: time
 # current shape = (612, 30, 96, 144)
 
-class ElevationTemperature(Plot):
+class TemperatureElevation(Plot):
 
     def __init__(self, months, time_periods, elevation, color="viridis", central_longitude=0):
 
