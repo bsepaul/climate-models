@@ -2,13 +2,11 @@
 
 {% block graph_container %}
 <div class="graphs">
-   {% for graph, pdf in renders %}
    <div class="graph-container">
       {{ graph | safe }}
    </div>
    <div class="pdf-link">
       {{ pdf | safe }}
    </div>
-   {% endfor %}
 </div>
 {% endblock %}

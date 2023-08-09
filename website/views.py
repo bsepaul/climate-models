@@ -16,8 +16,8 @@ def home():
         if renders == None:
             return render_template('home.html')
 
-        # Pass the list of graphs into the graph.html template
-        return render_template('graphs.html', renders=zip(renders["graphs"], renders["pdfs"]))
+        # Pass the graph and pdf into the graph.html template
+        return render_template('graphs.html', graph=renders['graph'], pdf=renders['pdf'])
 
     # If the page is just being loaded, only show home.html which has no graphs
     else:

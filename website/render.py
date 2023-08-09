@@ -68,14 +68,5 @@ def render(html_data):
         # Set the data, make the figure, and create the pdf
         testPlot.create_plot()
 
-        # Convert figure to an html string
-        graph = mpld3.fig_to_html(testPlot.fig)
-
-        # Add the new graph to the list of graphs to be updated in the html file
-        graphs.append(graph)
-
-        # Add the new pdf of the graph
-        pdfs.append(testPlot.pdf)
-
-    # Return the list of graphs to be rendered in the html file
-    return {"graphs":graphs, "pdfs":pdfs}
+    # Send a response containing the converted fig to html string and the pdf version of the graph
+    return {"graph":(mpld3.fig_to_html(testPlot.fig)), "pdf":(testPlot.pdf)}

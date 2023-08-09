@@ -51,7 +51,7 @@ class PrecipitationAmountPlot(Plot):
 
         # AttributeError: attribute T was not found in the file
         except AttributeError:
-            print("Dataset is missing \'PRECC\' or \'PRECL\' attribute")
+            print("Dataset is missing \'TMQ\' attribute")
             exit()
 
         # Another error occurred while accessing the data
