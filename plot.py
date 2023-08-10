@@ -29,6 +29,10 @@ class Plot:
         self.pdf  = None    # pdf will store the rendered pdf of the figure
         
         self.time_period_a = int(self.time_periods[0])
+        if len(self.time_periods) == 2:
+            self.time_period_b = int(self.time_periods[1])
+            self.file_name = "diff_" + self.file_name
+            self.title = self.title + " Difference"
         self.time_period_length = 10
 
     def set_data(self):
@@ -39,7 +43,6 @@ class Plot:
         else:
             self.data = self.get_time_period_data(self.time_period_a)
             if len(self.time_periods) == 2:
-                self.time_period_b = int(self.time_periods[1])
                 self.data -= self.get_time_period_data(self.time_period_b)
 
     def make_fig(self):
