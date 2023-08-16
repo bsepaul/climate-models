@@ -37,6 +37,12 @@ def render(html_data):
     # Color will always be passed due to default value
     data["color"] = html_data["color"]
 
+    # If user left a box blank, set the value to its default value
+    data["min_longitude"] = int(html_data["min_longitude"]) if html_data["min_longitude"] != '' else -180
+    data["max_longitude"] = int(html_data["max_longitude"]) if html_data["max_longitude"] != '' else 180
+    data["min_latitude"]  = int(html_data["min_latitude"])  if html_data["min_latitude"]  != '' else -90
+    data["max_latitude"]  = int(html_data["max_latitude"])  if html_data["max_latitude"]  != '' else 90
+
     # Elevation will always be passed due to default value
     data["elevation"] = int(html_data["elevation"])
 
@@ -51,22 +57,55 @@ def render(html_data):
 
         if plot == "tempSfc":
             # Create surface temperature plot
-            testPlot = TemperatureSurfacePlot(months = data["months"], time_periods = data["timePeriods"], color = data["color"])
+            testPlot = TemperatureSurfacePlot(
+                months = data["months"], 
+                time_periods = data["timePeriods"], 
+                color = data["color"], 
+                min_longitude=data["min_longitude"], 
+                max_longitude=data["max_longitude"], 
+                min_latitude=data["min_latitude"], 
+                max_latitude=data["max_latitude"], 
+                central_longitude=0)
 
         elif plot == "tempElev":
             # Create elevation temperature plot
-            testPlot = TemperatureElevation(months = data["months"], time_periods = data["timePeriods"], color = data["color"], elevation=data["elevation"])
+            testPlot = TemperatureElevation(
+                months = data["months"], 
+                time_periods = data["timePeriods"], 
+                elevation=data["elevation"], 
+                color = data["color"], 
+                min_longitude=data["min_longitude"], 
+                max_longitude=data["max_longitude"], 
+                min_latitude=data["min_latitude"], 
+                max_latitude=data["max_latitude"], 
+                central_longitude=0)
 
         elif plot == "pcpRate":
             # Create precipitation rate plot
-            testPlot = PrecipitationRatePlot(months= data["months"], time_periods = data["timePeriods"], color = data["color"])
+            testPlot = PrecipitationRatePlot(
+                months= data["months"], 
+                time_periods = data["timePeriods"], 
+                color = data["color"], 
+                min_longitude=data["min_longitude"], 
+                max_longitude=data["max_longitude"], 
+                min_latitude=data["min_latitude"], 
+                max_latitude=data["max_latitude"], 
+                central_longitude=0)
         
         elif plot == "pcpAmnt":
             # Create precipitation amount plot
-            testPlot = PrecipitationAmountPlot(months= data["months"], time_periods = data["timePeriods"], color = data["color"])
+            testPlot = PrecipitationAmountPlot(
+                months= data["months"], 
+                time_periods = data["timePeriods"], 
+                color = data["color"], 
+                min_longitude=data["min_longitude"], 
+                max_longitude=data["max_longitude"], 
+                min_latitude=data["min_latitude"], 
+                max_latitude=data["max_latitude"], 
+                central_longitude=0)
 
         # Set the data, make the figure, and create the pdf
         testPlot.create_plot()
 
-    # Send a response containing the converted fig to html string and the pdf version of the graph
-    return {"graph":(mpld3.fig_to_html(testPlot.fig)), "pdf":(testPlot.pdf)}
+    # Send a response containing the converted fig to html string, the png version of the graph, and the pdf version of the graph
+    return {"graph":(mpld3.fig_to_html(testPlot.fig)), "png":(testPlot.png), "pdf":(testPlot.pdf)}

@@ -64,23 +64,36 @@ html {
     align-items: center;
 }
 
-.graph-container {
+.graph-container-mpld3 {
     background-color: var(--lightBlue);
     padding: 15px;
     border-radius: 30px;
 }
 
-.graphs {
+.graph-container-png {
+    display: flex;
+    justify-content: center;
+}
+
+.graph-png {
+    border-radius: 30px;
+}
+
+.graph-display {
     display: grid;
     grid-template-columns: 100%;
     row-gap: 3%;
     justify-content: center;
     padding-top: 5%;
-    margin-bottom: 100px;
 }
 
 .options {
     display: none;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
 }
 
 .section {
@@ -246,6 +259,27 @@ html {
     border: 3px solid var(--white);
     transition-duration: 0.5s;
     box-shadow: inset 0px 0px 20px var(--white);
+}
+
+
+/* ******************** */
+/* NUMBER INPUT STYLING */
+/* ******************** */
+
+input[type=number] {
+    color: var(--white);
+    font-family: Helvetica, sans-serif;
+    font-weight: 100;
+    font-size: 14px;
+    height: 36px;
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 10px;
+    width: 60px;
+    padding-left: 10px;
+    background-color: rgb(0, 0, 0, 0);
+    border: 0px;
+    border-bottom: 1px solid var(--white);
 }
 
 /* ********************** */

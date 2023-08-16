@@ -20,10 +20,10 @@ from plot import Plot
 
 class TemperatureSurfacePlot(Plot):
 
-    def __init__(self, months, time_periods, color="viridis", central_longitude=0):
+    def __init__(self, months, time_periods, color="viridis", min_longitude=-180, max_longitude=180, min_latitude=-90, max_latitude=90, central_longitude=0):
 
         # Initiate instance of super class: Plot
-        super().__init__(months, time_periods, color, central_longitude, "Global Surface Temperature", "K", "sfc_temp_plot.pdf")
+        super().__init__(months, time_periods, color, min_longitude, max_longitude, min_latitude, max_latitude, central_longitude, "Global Surface Temperature", "K", "sfc_temp_plot.pdf")
 
     def get_time_period_data(self, time_period):
 
