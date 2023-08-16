@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 
 {% block graph_container %}
-<div class="graphs">
-   <div class="graph-container">
+<div class="graph-display">
+   <!-- <div class="graph-container-mpld3">
       {{ graph | safe }}
+   </div> -->
+   <div class="graph-container-png">
+      {{ png | safe }}
    </div>
    <div class="pdf-link">
       {{ pdf | safe }}

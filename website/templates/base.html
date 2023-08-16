@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="icon" href="{{url_for('static', filename='globe.png')}}">
+    <link rel="icon" href="{{url_for('static', filename='img/globe.png')}}">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script type="text/javascript" src="{{url_for('static', filename='script.js')}}"></script>
     <title>
@@ -145,6 +145,17 @@
                         {% for month in months %}
                         <input type="checkbox" name="month" value="{{month['val']}}" id="{{month['name']}}" /><label for="{{month['name']}}">{{month['name']}}</label>
                         {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="bubble">
+                    <div class="subtitle">Select Latitude and Longitude</div>
+                    <div class="section">
+                        <input type="number" id="min_latitude" name="min_latitude" value="-90" min="-90" max="90">
+                        <input type="number" id="max_latitude" name="max_latitude" value="90" min="-90" max="90">
+                        <input type="number" id="min_longitude" name="min_longitude" value="-180" min="-180" max="180">
+                        <input type="number" id="max_longitude" name="max_longitude" value="180" min="-180" max="180">
                     </div>
                 </div>
             </div>
