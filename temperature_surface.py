@@ -48,17 +48,13 @@ class TemperatureSurfacePlot(Plot):
 
             total_data = self.ds.TS[start : end]
 
-            averaged_data = total_data[0]
+            mean_data = total_data.mean('time')
 
-
-            for i in range(1, len(total_data)):
-                averaged_data += total_data[i]
+            mean_interpolated_data = gv.xr_add_cyclic_longitudes(mean_data, "lon")
 
             self.ds.close()
 
-            averaged_data = averaged_data / len(total_data)
-
-            return averaged_data
+            return mean_interpolated_data
 
         # AttributeError: attribute T was not found in the file
         except AttributeError:
