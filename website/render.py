@@ -1,6 +1,5 @@
 from temperature_surface import TemperatureSurfacePlot
 from temperature_elevation import TemperatureElevation
-from precipitation_amount import PrecipitationAmountPlot
 from precipitation_rate import PrecipitationRatePlot
 import mpld3
 
@@ -83,18 +82,6 @@ def render(html_data):
         elif plot == "pcpRate":
             # Create precipitation rate plot
             testPlot = PrecipitationRatePlot(
-                months= data["months"], 
-                time_periods = data["timePeriods"], 
-                color = data["color"], 
-                min_longitude=data["min_longitude"], 
-                max_longitude=data["max_longitude"], 
-                min_latitude=data["min_latitude"], 
-                max_latitude=data["max_latitude"], 
-                central_longitude=0)
-        
-        elif plot == "pcpAmnt":
-            # Create precipitation amount plot
-            testPlot = PrecipitationAmountPlot(
                 months= data["months"], 
                 time_periods = data["timePeriods"], 
                 color = data["color"], 
