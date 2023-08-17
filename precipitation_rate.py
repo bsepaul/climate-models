@@ -47,9 +47,12 @@ class PrecipitationRatePlot(Plot):
 
             total_data = self.ds.PRECC[start : end] + self.ds.PRECL[start : end]
 
+            # https://docs.xarray.dev/en/stable/generated/xarray.Variable.mean.html
             mean_data = total_data.mean('time')
 
             mean_interpolated_data = gv.xr_add_cyclic_longitudes(mean_data, "lon")
+
+            # Convert from m/s to mm/day
             mean_interpolated_data *= 86400000
 
             self.ds.close()
