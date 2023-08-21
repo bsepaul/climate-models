@@ -15,7 +15,7 @@ class Plot:
     def __init__(self, months, time_periods, color="viridis", min_longitude=-180, max_longitude=180, min_latitude=-90, max_latitude=90, central_longitude=0, title="Plot", label="", file_name="plot.pdf"):
 
         # Set the passed in variables
-        self.months             = months            # months is an array of the months that the user wants to be averaged for their plot
+        self.months             = [int(month) for month in months]            # months is an array of the months that the user wants to be averaged for their plot
         self.time_periods       = time_periods      # time_periods is an array of the time_period(s) that the user selected - one time_period means average of that time period, two time_periods means the difference of the average of each time period
         self.time_period_length = 10                # this could be passed in as a dynamic variable but set to 10 for now
         self.color              = color             # color scheme of the plot
@@ -78,13 +78,22 @@ class Plot:
 
     def make_fig(self):
 
-        max = min = self.data.values[0][0]
-        for values in self.data.values:
-            for value in values:
-                if value > max: max = value
-                elif value < min: min = value
-        max = math.ceil(max)
-        min = math.floor(min)
+        # Find minimum, maximum and standard deviation of the data set
+        min_val = self.data.min().data
+        mean_val = self.data.mean().data
+        max_val = self.data.max().data
+        std_dev = self.data.std().data
+
+
+        # If it's a difference plot, center the color bar on 0 by making the min and max opposite values
+        if len(self.time_periods) == 2:
+            # min_val, max_val = -(max(abs(min_val), abs(max_val))), max(abs(min_val), abs(max_val))
+            min_val, max_val = -(mean_val + (2 * std_dev)), (mean_val + (2 * std_dev))
+
+        # If it's not a difference plot and there is only one time period, no need to center the color bar
+        # Determine min and max values based on mean and std deviation
+        elif len(self.time_periods) == 1:
+            min_val, max_val = (mean_val - (2 * std_dev)), (mean_val + (2 * std_dev))
 
         projection = ccrs.PlateCarree(central_longitude=self.central_longitude)
         self.fig, ax = plt.subplots(figsize=(9, 6), subplot_kw=dict(projection=projection))
@@ -101,19 +110,25 @@ class Plot:
                                      xticks=np.linspace(self.min_longitude, self.max_longitude, self.xticks).round(2),
                                      yticks=np.linspace(self.min_latitude, self.max_latitude, self.yticks).round(2))
 
+        # Create the plot contours
         plot = self.data[:, :].plot.contourf(ax=ax,
                                         transform=ccrs.PlateCarree(),
-                                        vmin=min,
-                                        vmax = max,
-                                        levels = 20,
-                                        cmap = self.color,
-                                        cbar_kwargs = {
-                                            "extendrect":True,
-                                            "orientation":"horizontal",
-                                            "spacing":"proportional",
-                                            "format":"%.2f",
-                                            "label": self.label,
-                                            "shrink": 0.90})
+                                        vmin=min_val,
+                                        vmax = max_val,
+                                        levels = 19,
+                                        add_colorbar=False,
+                                        cmap = self.color)
+
+        # Create the plot color bar
+        cbar = plt.colorbar(plot,
+                    orientation='horizontal',
+                    shrink=0.95,
+                    spacing='proportional',
+                    extendrect=True,
+                    extendfrac='auto',
+                    format='%.2f',
+                    drawedges=True)
+        cbar.ax.tick_params(labelsize=8)
 
         # Use geocat.viz.util convenience function to add minor and major tick lines
         gv.add_major_minor_ticks(ax, labelsize=8)
