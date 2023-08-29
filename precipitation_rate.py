@@ -41,30 +41,37 @@ class PrecipitationRatePlot(Plot):
 
             file = "netcdf_files_full/test_data_4000-4050.nc"
             self.ds = xr.open_dataset(file, decode_times=False)
-
-            start = (time_period * self.time_period_length * 12)
-            end = start + ((self.time_period_length + 1) * 12)
-
-            total_data = self.ds.PRECC[start : end] + self.ds.PRECL[start : end]
-
-            # https://docs.xarray.dev/en/stable/generated/xarray.Variable.mean.html
-            mean_data = total_data.mean('time')
-
-            mean_interpolated_data = gv.xr_add_cyclic_longitudes(mean_data, "lon")
-
-            # Convert from m/s to mm/day
-            mean_interpolated_data *= 86400000
-
-            self.ds.close()
-
-            return mean_interpolated_data
-
-        # AttributeError: attribute T was not found in the file
-        except AttributeError:
-            print("Dataset is missing \'PRECC\' or \'PRECL\' attribute")
-            exit()
-
+        
         # Another error occurred while accessing the data
-        except:
-            print("Something went wrong while accessing the data file")
+        except Exception as error:
+            print("Something went wrong while accessing the data file. See error below:")
+            print(error)
             exit()
+
+        start = (time_period * self.time_period_length * 12)
+        end = start + ((self.time_period_length + 1) * 12)
+
+        # Create a list of indexes to extract the data that the user is requesting
+        # If the user requests the first time period, and months January, July, and December:
+        # indexes = [0, 6, 11, 12, 18, 23, 24, 30, 35, 36, 42, 47, 48, 54, 59, 60, 66, 71, 72, 78, 83, 84, 90, 95, 96, 102, 107, 108, 114, 119, 120, 126, 131]
+        indexes = []
+        for jan_index in range(start, end, 12):
+            for month_index in self.months:
+                indexes.append(jan_index + month_index)
+
+        # Select all of the time slices out of surface temperature data
+        selected_data = self.ds.PRECC.isel(time=[index for index in indexes]) + self.ds.PRECL.isel(time=[index for index in indexes])
+        # Interpolate longitude values so it goes from (0, 357) -> (0, 360)
+        selected_data = gv.xr_add_cyclic_longitudes(selected_data, "lon")
+        # Select the latitude and longitude values based on min/max lat/lon values that user enters
+        selected_data = selected_data.sel(lat=self.latitude_range, method='nearest', tolerance=2)
+        selected_data = selected_data.sel(lon=self.longitude_range, method='nearest', tolerance=2)
+        # Average the data over time variable
+        selected_data = selected_data.mean('time')
+        # Convert from m/s to mm/day
+        selected_data *= 86400000
+        # Close the data set
+        self.ds.close()
+
+        # Return selected, interpolated, averaged data to be plotted
+        return selected_data

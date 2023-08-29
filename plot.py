@@ -15,7 +15,7 @@ class Plot:
     def __init__(self, months, time_periods, color="viridis", min_longitude=-180, max_longitude=180, min_latitude=-90, max_latitude=90, central_longitude=0, title="Plot", label="", file_name="plot.pdf"):
 
         # Set the passed in variables
-        self.months             = [int(month) for month in months]            # months is an array of the months that the user wants to be averaged for their plot
+        self.months             = [(int(month) - 1) for month in months]            # months is an array of the months that the user wants to be averaged for their plot
         self.time_periods       = time_periods      # time_periods is an array of the time_period(s) that the user selected - one time_period means average of that time period, two time_periods means the difference of the average of each time period
         self.time_period_length = 10                # this could be passed in as a dynamic variable but set to 10 for now
         self.color              = color             # color scheme of the plot
@@ -27,10 +27,20 @@ class Plot:
         self.ds   = None    # ds will store the data from the files
         self.data = None    # data will store the data that the graph is going to be made from
 
-        self.min_longitude = min_longitude  # user's entered value for minimum longitude value, defaults to -180
-        self.max_longitude = max_longitude  # user's entered value for maximum longitude value, defaults to 180
         self.min_latitude  = min_latitude   # user's entered value for minimum latitude value, defaults to -90
         self.max_latitude  = max_latitude   # user's entered value for maximum latitude value, defaults to 90
+        self.min_longitude = min_longitude  # user's entered value for minimum longitude value, defaults to -180
+        self.max_longitude = max_longitude  # user's entered value for maximum longitude value, defaults to 180
+
+        # Set latitude range of values and longitude range of values for plotting
+        # Data's longitude values are in 0 - 360 degrees rather than -180 to 180, so convert and determine appropriate ranges
+        self.latitude_range = [i for i in np.arange(min_latitude, max_latitude+2, 1.89)]
+        if min_longitude < 0 and self.max_longitude < 0:
+            self.longitude_range = [i for i in np.arange(min_longitude+360, max_longitude+362, 2.5)]
+        elif min_longitude < 0:
+            self.longitude_range = [i for i in np.arange(0, max_longitude+2, 2.5)] + [i for i in np.arange(min_longitude+360, 362, 2.5)]
+        else:
+            self.longitude_range = [i for i in np.arange(min_longitude, max_longitude+2, 2.5)]
 
         self.fig  = None    # fig will store the rendered graphical figure
         self.pdf  = None    # pdf will store the rendered pdf of the figure
@@ -49,8 +59,8 @@ class Plot:
         # If a plot has a 1 x 5 ratio 1 -> width_ratio and 5 -> height_ratio, we want less ticks on the x axis and more on the y axis
         # Either self.height_ratio or self.width_ratio = 1, dividing 12 by 1 gives us 12 and we want that for the larger dimension
         # We would get self.xticks = 12 / 5 = 2.4 and self.yticks = 12 / 1 = 12, after the ceiling function we have 3 ticks on the x axis and 12 on the y axis
-        self.xticks = math.ceil(12 / self.height_ratio)
-        self.yticks = math.ceil(12 / self.width_ratio)
+        self.xticks = math.ceil(6 / self.height_ratio)
+        self.yticks = math.ceil(8 / self.width_ratio)
 
         # We never want one tick because the user won't be able to tell the units, so increase it to 2
         if self.xticks == 1: self.xticks += 1
