@@ -36,27 +36,31 @@ def render(html_data):
     if data["plots"] == []:
         warning_messages.append('Must select a variable to plot') 
 
-    # If user didn't select any months, add warning message
-    data["months"] = html_data.getlist('month')
-    if data["months"] == []:
-        warning_messages.append('Must select at least one month')
-
-    # The rest of the variables will always be passed, or have default values
-    # If there are any warnings in the warning_messages list, return them to avoid runnin unnecessary code
-    if warning_messages != []:
-        return {"warnings": warning_messages}
-
     # Color will always be passed due to default value
     data["color"] = html_data["color"]
 
     # Elevation will always be passed due to default value
     data["elevation"] = int(html_data["elevation"])
 
+    # If user didn't select any months, add warning message
+    data["months"] = html_data.getlist('month')
+    if data["months"] == []:
+        warning_messages.append('Must select at least one month')
+
     # If user left a box blank, set the value to its default value
     data["min_longitude"] = int(html_data["min_longitude"]) if html_data["min_longitude"] != '' else -180
     data["max_longitude"] = int(html_data["max_longitude"]) if html_data["max_longitude"] != '' else 180
     data["min_latitude"]  = int(html_data["min_latitude"])  if html_data["min_latitude"]  != '' else -90
     data["max_latitude"]  = int(html_data["max_latitude"])  if html_data["max_latitude"]  != '' else 90
+
+    if data["min_longitude"] >= data["max_longitude"]:
+        warning_messages.append('Minimum longitude value must be less than maximum longitude value')
+    if data["min_latitude"] >= data["max_latitude"]:
+        warning_messages.append('Minimum latitude value must be less than maximum latitude value')
+
+    # If there are any warnings in the warning_messages list, return them to avoid runnin unnecessary code
+    if warning_messages != []:
+        return {"warnings": warning_messages}
 
     # Empty list to store html strings of interactive and pdf forms for each graph requested
     graphs = []
