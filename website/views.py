@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, flash, redirect
 from .render import *
 
 views = Blueprint('views', __name__)
@@ -13,8 +13,10 @@ def home():
         renders = render(request.form)
 
         # if user did not select a graph type or any months don't render the graph
-        if renders == None:
-            return render_template('home.html')
+        if renders['warnings'] != []:
+            for message in renders['warnings']:
+                flash(message)
+            return redirect(request.url)
 
         # Pass the graph and pdf into the graph.html template
         return render_template('graphs.html', graph=renders['graph'], png=renders['png'], pdf=renders['pdf'])

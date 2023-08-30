@@ -5,6 +5,7 @@
     --lightBlue: #a2b0bc;
     --white: #f1f1f1;
     --darkerBlue: #0b1218;
+    --maroon: #4f1a1a;
 }
 
 /* Give full background color */
@@ -85,6 +86,18 @@ html {
     row-gap: 3%;
     justify-content: center;
     padding-top: 5%;
+}
+
+.warning {
+    justify-content: center;
+    padding: 15px 20px 15px 20px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    width: fit-content;
+    border-radius: 10px;
+    transition: 0.8s;
+    color: var(--white);
+    background-color: var(--maroon);
 }
 
 .options {

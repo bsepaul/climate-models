@@ -10,40 +10,53 @@ def render(html_data):
 
     # create an empty dictionary to store values selected by the user in the html form
     data = {}
+    warning_messages = []
 
     # Attempt to extract user's selections from the html data
 
-    # If user didn't select a graph type, return None
+    # If user didn't select a graph type, add warning message
     data["graphType"] = html_data.getlist('graphType')
-    if data["graphType"] == []: return None
+    if data["graphType"] == []: 
+        warning_messages.append('Must select a graph type')
 
-    # If the user didn't select either single or compare time periods, return None
-    if data["graphType"][0] == 'compare':
-        data["timePeriods"] = html_data.getlist('compareTimePeriod')
-    elif data["graphType"][0] == 'single':
+    # If user selected single time period but did not select 1 time period, add warning message
+    if data["graphType"][0] == 'single':
         data["timePeriods"] = html_data.getlist('singleTimePeriod')
-    else:
-        return None
-
-    # If user didn't select any months, return None
-    data["months"] = html_data.getlist('month')
-    if data["months"] == []: return None
-
-    # If user didn't select any plot types, return None
+        if len(data["timePeriods"]) != 1:
+            warning_messages.append('Must select one time period')
+    
+    # If user selected compare time periods but did not select 2 time periods, add warning message
+    elif data["graphType"][0] == 'compare':
+        data["timePeriods"] = html_data.getlist('compareTimePeriod')
+        if len(data["timePeriods"]) != 2:
+            warning_messages.append('Must select two time periods to compare')
+    
+    # If user didn't select any plot types, add warning message
     data["plots"]  = html_data.getlist('graphVariable')
-    if data["plots"] == []: return None
+    if data["plots"] == []:
+        warning_messages.append('Must select a variable to plot') 
+
+    # If user didn't select any months, add warning message
+    data["months"] = html_data.getlist('month')
+    if data["months"] == []:
+        warning_messages.append('Must select at least one month')
+
+    # The rest of the variables will always be passed, or have default values
+    # If there are any warnings in the warning_messages list, return them to avoid runnin unnecessary code
+    if warning_messages != []:
+        return {"warnings": warning_messages}
 
     # Color will always be passed due to default value
     data["color"] = html_data["color"]
+
+    # Elevation will always be passed due to default value
+    data["elevation"] = int(html_data["elevation"])
 
     # If user left a box blank, set the value to its default value
     data["min_longitude"] = int(html_data["min_longitude"]) if html_data["min_longitude"] != '' else -180
     data["max_longitude"] = int(html_data["max_longitude"]) if html_data["max_longitude"] != '' else 180
     data["min_latitude"]  = int(html_data["min_latitude"])  if html_data["min_latitude"]  != '' else -90
     data["max_latitude"]  = int(html_data["max_latitude"])  if html_data["max_latitude"]  != '' else 90
-
-    # Elevation will always be passed due to default value
-    data["elevation"] = int(html_data["elevation"])
 
     # Empty list to store html strings of interactive and pdf forms for each graph requested
     graphs = []
@@ -95,4 +108,4 @@ def render(html_data):
         testPlot.create_plot()
 
     # Send a response containing the converted fig to html string, the png version of the graph, and the pdf version of the graph
-    return {"graph":(mpld3.fig_to_html(testPlot.fig)), "png":(testPlot.png), "pdf":(testPlot.pdf)}
+    return {"graph":(mpld3.fig_to_html(testPlot.fig)), "png":(testPlot.png), "pdf":(testPlot.pdf), "warnings":warning_messages}

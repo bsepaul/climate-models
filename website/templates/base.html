@@ -19,6 +19,18 @@
         <div class="title">CLIMATE MODELS</div>
 
         {% block selection %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="center-vertical">
+            {% for message in messages %}
+            <div class="warning">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
         <form method="POST">
 
             <!-- GRAPH TYPE SELECTION -->
