@@ -12,7 +12,7 @@ import math
 
 class Plot:
 
-    def __init__(self, months, time_periods, color="viridis", min_longitude=-180, max_longitude=180, min_latitude=-90, max_latitude=90, central_longitude=0, title="Plot", label="", file_name="plot.pdf"):
+    def __init__(self, months, time_periods, color="viridis", min_longitude=-180, max_longitude=180, min_latitude=-90, max_latitude=90, central_longitude=0, num_std_dev=2, title="Plot", label="", file_name="plot.pdf"):
 
         # Set the passed in variables
         self.months             = [(int(month) - 1) for month in months]            # months is an array of the months that the user wants to be averaged for their plot
@@ -20,6 +20,7 @@ class Plot:
         self.time_period_length = 10                # this could be passed in as a dynamic variable but set to 10 for now
         self.color              = color             # color scheme of the plot
         self.central_longitude  = central_longitude # longitude that will be at the center of rendered plot
+        self.num_std_dev        = num_std_dev       # number of std devations away from the mean the range will be
         self.title              = title             # title of the plot
         self.label              = label             # label (units) of the plot
         self.file_name          = file_name         # file name of rendered plot if user saves the plot
@@ -98,12 +99,12 @@ class Plot:
         # If it's a difference plot, center the color bar on 0 by making the min and max opposite values
         if len(self.time_periods) == 2:
             # min_val, max_val = -(max(abs(min_val), abs(max_val))), max(abs(min_val), abs(max_val))
-            min_val, max_val = -(mean_val + (2 * std_dev)), (mean_val + (2 * std_dev))
+            min_val, max_val = -(mean_val + (self.num_std_dev * std_dev)), (mean_val + (self.num_std_dev * std_dev))
 
         # If it's not a difference plot and there is only one time period, no need to center the color bar
         # Determine min and max values based on mean and std deviation
         elif len(self.time_periods) == 1:
-            min_val, max_val = (mean_val - (2 * std_dev)), (mean_val + (2 * std_dev))
+            min_val, max_val = (mean_val - (self.num_std_dev * std_dev)), (mean_val + (self.num_std_dev * std_dev))
 
         projection = ccrs.PlateCarree(central_longitude=self.central_longitude)
         self.fig, ax = plt.subplots(figsize=(9, 6), subplot_kw=dict(projection=projection))

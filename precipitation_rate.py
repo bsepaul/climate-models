@@ -30,10 +30,10 @@ from plot import Plot
 
 class PrecipitationRatePlot(Plot):
 
-    def __init__(self, months, time_periods, color="viridis", min_longitude=-180, max_longitude=180, min_latitude=-90, max_latitude=90, central_longitude=0):
+    def __init__(self, months, time_periods, color="viridis", min_longitude=-180, max_longitude=180, min_latitude=-90, max_latitude=90, central_longitude=0, num_std_dev=2):
 
         # Initiate instance of super class: Plot
-        super().__init__(months, time_periods, color, min_longitude, max_longitude, min_latitude, max_latitude, central_longitude, "Precipitation Rate", "mm/day", "precip_rate_plot.pdf")
+        super().__init__(months, time_periods, color, min_longitude, max_longitude, min_latitude, max_latitude, central_longitude, num_std_dev, "Precipitation Rate", "mm/day", "precip_rate_plot.pdf")
 
     def get_time_period_data(self, time_period):
 

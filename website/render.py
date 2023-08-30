@@ -58,6 +58,8 @@ def render(html_data):
     if data["min_latitude"] >= data["max_latitude"]:
         warning_messages.append('Minimum latitude value must be less than maximum latitude value')
 
+    data["num_std_dev"] = int(html_data["num_std_dev"]) if html_data["num_std_dev"] else 2
+
     # If there are any warnings in the warning_messages list, return them to avoid runnin unnecessary code
     if warning_messages != []:
         return {"warnings": warning_messages}
@@ -80,8 +82,9 @@ def render(html_data):
                 min_longitude=data["min_longitude"], 
                 max_longitude=data["max_longitude"], 
                 min_latitude=data["min_latitude"], 
-                max_latitude=data["max_latitude"], 
-                central_longitude=0)
+                max_latitude=data["max_latitude"],
+                central_longitude=0,
+                num_std_dev=data["num_std_dev"])
 
         elif plot == "tempElev":
             # Create elevation temperature plot
@@ -94,7 +97,8 @@ def render(html_data):
                 max_longitude=data["max_longitude"], 
                 min_latitude=data["min_latitude"], 
                 max_latitude=data["max_latitude"], 
-                central_longitude=0)
+                central_longitude=0,
+                num_std_dev=data["num_std_dev"])
 
         elif plot == "pcpRate":
             # Create precipitation rate plot
@@ -106,7 +110,8 @@ def render(html_data):
                 max_longitude=data["max_longitude"], 
                 min_latitude=data["min_latitude"], 
                 max_latitude=data["max_latitude"], 
-                central_longitude=0)
+                central_longitude=0,
+                num_std_dev=data["num_std_dev"])
 
         # Set the data, make the figure, and create the pdf
         testPlot.create_plot()
