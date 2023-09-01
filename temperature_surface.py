@@ -29,7 +29,7 @@ class TemperatureSurfacePlot(Plot):
         
         try:
             
-            file = "netcdf_files_full/test_data_4000-4050.nc"
+            file = "netcdf_files/test_data_4000-4050.nc"
             self.ds = xr.open_dataset(file, decode_times=False)
 
         # Another error occurred while accessing the data
