@@ -20,11 +20,8 @@ def home():
 
         # Pass the graph and pdf into the graph.html template
         return render_template('graphs.html', graph=renders['graph'], png=renders['png'], pdf=renders['pdf'])
+        # return render_template('graphsjs.html')
 
     # If the page is just being loaded, only show home.html which has no graphs
     else:
         return render_template('home.html')
-
-@views.route('/test', methods=['GET', 'POST'])
-def test():
-    return render_template('test.html')

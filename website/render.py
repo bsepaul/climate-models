@@ -3,7 +3,7 @@ from temperature_elevation import TemperatureElevation
 from precipitation_rate import PrecipitationRatePlot
 import mpld3
 
-# render the graphs into html strings
+# render the graphs based on user selections
 def render(html_data):
 
     print(f"\nhtml data:\n{html_data}\n")
@@ -64,9 +64,6 @@ def render(html_data):
     if warning_messages != []:
         return {"warnings": warning_messages}
 
-    # Empty list to store html strings of interactive and pdf forms for each graph requested
-    graphs = []
-    pdfs = []
     print(f"\nparsed data:\n{data}\n")
 
     # Iterate through plot types requested and make graph for each plot
