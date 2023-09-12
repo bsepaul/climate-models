@@ -7,9 +7,9 @@
 
     source env/bin/activate
 
-## Activate virtual environment
+## Run web application
 
-    source env/bin/activate
+    python3 webapp.py
 
 ## Install Nix on your OS
 
