@@ -1,8 +1,15 @@
 # Climate Models
 
+## Demo
+![Demo recording of Climate Models website](https://github.com/bsepaul/climate-models/blob/main/demo.gif)
+
 ## Activate virtual environment
 
-    source Environments/env/bin/activate
+    source env/bin/activate
+
+## Activate virtual environment
+
+    source env/bin/activate
 
 ## Install Nix on your OS
 
